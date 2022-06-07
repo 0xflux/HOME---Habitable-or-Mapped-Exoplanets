@@ -560,7 +560,7 @@ def graph_gravity(exo, hab, savepathall, savepathhab):
 	# plot
 	plt.clf()
 
-	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) \n of all detected exoplanets with Earth plotted as an organge point.", fontsize=10)
+	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) (vs. its radius) \n of all detected exoplanets with Earth plotted as an organge point.", fontsize=10)
 	plt.xlabel("Planet's mass / kg")
 	plt.ylabel("G-Force compared to Earth / G's")
 
@@ -590,14 +590,10 @@ def graph_gravity(exo, hab, savepathall, savepathhab):
 	x_planet_mass = np.array(t_df['planet_mass_in_kg']) 
 	y_g_force = np.array(t_df['gravity_compared_to_earth'])
 
-	# add some data for earth (orange dot on plot)
-	earth_mass = 5.972e24
-	earth_g = 1
-
 	# clear last plot
 	plt.clf()
 
-	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) of all \ndetected habitable exoplanets with Earth plotted as an organge point.", fontsize=10)
+	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) (vs. its radius) of all \ndetected habitable exoplanets with Earth plotted as an organge point.", fontsize=10)
 	plt.xlabel("Planet's mass / kg")
 	plt.ylabel("G-Force compared to Earth / G's")
 
@@ -610,6 +606,80 @@ def graph_gravity(exo, hab, savepathall, savepathhab):
 	plt.axhline(y=4, color='r', linestyle='-') # plot line
 
 	plt.savefig(savepathhab)
+
+
+	### plot g's vs radius ###
+
+	# clear previous plot and make new plot
+	plt.clf()
+	combined = {'gravity_compared_to_earth': np.array(exo['gravity_compared_to_earth']), 
+	'planet_actual_radius' : np.array(exo['planet_actual_radius'])}
+
+	# temp dataframe to remove nans - if there are nan values in the dataframe, remove the row as we need both x and y values to plot.
+	t_df = pd.DataFrame(combined)
+	t_df.dropna(inplace = True)
+
+	# Create our final dataset, independant variable on the x
+	x_planet_radius = np.array(t_df['planet_actual_radius']) 
+	y_g_force = np.array(t_df['gravity_compared_to_earth'])
+
+	# add some data for earth (orange dot on plot)
+	earth_mass = 5.972e24
+	earth_g = 1
+
+	# plot
+	plt.clf()
+
+	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) (vs. its radius) \n of all detected exoplanets with Earth plotted as an organge point.", fontsize=10)
+	plt.xlabel("Planet's radius / km")
+	plt.ylabel("G-Force compared to Earth / G's")
+
+	plt.scatter(x_planet_radius, y_g_force, s=5)
+	plt.scatter(6371, earth_g, s=15)
+
+	# Humans could build the strength to survive up to 4 G's potentially (though i have seen studies suggeting we can only survive
+	# 3 G's for up to 2 minuets, so not sure on the reliability of this.) Add a line to indicate this cut off point. 
+	# Source: https://www.discovermagazine.com/the-sciences/whats-the-maximum-gravity-we-could-survive
+	plt.axhline(y=4, color='r', linestyle='-') # plot line
+
+	plt.savefig("./output/g_force_all_exoplanets_radius.png")
+
+
+	### plot g's vs radius ###
+
+	# clear previous plot and make new plot
+	plt.clf()
+	combined = {'gravity_compared_to_earth': np.array(hab['gravity_compared_to_earth']), 
+	'planet_actual_radius' : np.array(hab['planet_actual_radius'])}
+
+	# temp dataframe to remove nans - if there are nan values in the dataframe, remove the row as we need both x and y values to plot.
+	t_df = pd.DataFrame(combined)
+	t_df.dropna(inplace = True)
+
+	# Create our final dataset, independant variable on the x
+	x_planet_radius = np.array(t_df['planet_actual_radius']) 
+	y_g_force = np.array(t_df['gravity_compared_to_earth'])
+
+	# add some data for earth (orange dot on plot)
+	earth_mass = 5.972e24
+	earth_g = 1
+
+	# plot
+	plt.clf()
+
+	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) (vs. its radius) \n of all detected habitable exoplanets with Earth plotted as an organge point.", fontsize=10)
+	plt.xlabel("Planet's radius / km")
+	plt.ylabel("G-Force compared to Earth / G's")
+
+	plt.scatter(x_planet_radius, y_g_force, s=5)
+	plt.scatter(6371, earth_g, s=15)
+
+	# Humans could build the strength to survive up to 4 G's potentially (though i have seen studies suggeting we can only survive
+	# 3 G's for up to 2 minuets, so not sure on the reliability of this.) Add a line to indicate this cut off point. 
+	# Source: https://www.discovermagazine.com/the-sciences/whats-the-maximum-gravity-we-could-survive
+	plt.axhline(y=4, color='r', linestyle='-') # plot line
+
+	plt.savefig("./output/g_force_all_exoplanets_habitable_radius.png")
 
 
 
