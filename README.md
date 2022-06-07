@@ -56,6 +56,6 @@ It is also worth noting at this point that just because the line of 4 G's would 
 
 I have then produced a pie chart showing the split between planets over, and under, 4 G's.
 
-<img width="306" alt="image" src="https://user-images.githubusercontent.com/49762827/172440464-13aedf23-e625-479f-be5e-ec82835d22e4.png">
+<img width="410" alt="image" src="https://user-images.githubusercontent.com/49762827/172440464-13aedf23-e625-479f-be5e-ec82835d22e4.png">
 
 
