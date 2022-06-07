@@ -42,11 +42,11 @@ More graphs will follow. However you can now see some interesting comparisons:
 
 ### A graph to show the G-Force acting on various planets, with a comparison of habitable and non-habitable planets:
 
-<img width="1233" alt="image" src="https://user-images.githubusercontent.com/49762827/172432841-3afe504f-b538-4d08-a8b4-0862cecf4498.png">
+<img width="1233" alt="image" src="https://user-images.githubusercontent.com/49762827/172436933-1e13c0c4-ef48-4d23-a0d5-b5db7d372849.png">
 
 Interestingly, I expected the plot to be roughly a straight line graph as I was expecting there to be a correlation between the radius of a planet and its mass - the data is surprising! Looking at the data alone, seeing planets with a low mass but high g-force may indicate the planets have heavier elements present. I have then plotted the G-Force against radius, to see what that trend looks like, and that data reinforces this hypothesis. It would be interesting to obtain a spectroscopy sample from the exoplanet to see what wavelengths of light are emitted from the planet which may help determine what elements are present.
 
-<img width="1222" alt="image" src="https://user-images.githubusercontent.com/49762827/172435556-eb02c8a0-d606-488e-b1da-5f76bed376a0.png">
+<img width="1233" alt="image" src="https://user-images.githubusercontent.com/49762827/172435556-eb02c8a0-d606-488e-b1da-5f76bed376a0.png">
 
 Personally, I am very excited to see what results the James Webb Space Telescope has to offer in terms of spectroscopy of exoplanets, and I will look to clean and add that data to this set! I would also like to see whether I could mathematically model what elements are likely to be present on a certain planet given the force of gravity vs its radius. Could any of these predicted elements be complex enough that they would only occur as a result of biological life?
 
