@@ -51,3 +51,9 @@ Interestingly, I expected the plot to be roughly a straight line graph as I was 
 Personally, I am very excited to see what results the James Webb Space Telescope has to offer in terms of spectroscopy of exoplanets, and I will look to clean and add that data to this set! I would also like to see whether I could mathematically model what elements are likely to be present on a certain planet given the force of gravity vs its radius. Could any of these predicted elements be complex enough that they would only occur as a result of biological life?
 
 It is also worth noting at this point that just because the line of 4 G's would be too much for humans to withstand, there is nothing to say that life could not emerge as an extremophile on other planets, capable of withstanding high amounts of gravity.
+
+I have then produced a pie chart showing the split between planets over, and under, 4 G's.
+
+<img width="617" alt="image" src="https://user-images.githubusercontent.com/49762827/172440464-13aedf23-e625-479f-be5e-ec82835d22e4.png">
+
+
