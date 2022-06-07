@@ -76,7 +76,12 @@ def main():
 	histogram_exoplanets_per_star(exoplanets, './output/histogram_exoplanets_per_star.png', 
 		'A histogram to show the frequency of exoplanets orbiting a host star.')
 
-	graph_habitable_exoplanets(exoplanets)
+	habitable = graph_habitable_exoplanets(exoplanets)
+
+	#breakpoint()
+
+	# graph the gravitational forces for both habitable planets and non-habitable.
+	graph_gravity(exoplanets, habitable, './output/g_force_all_exoplanets.png', './output/g_force_habitable_exoplanets.png')
 
 	# TODO - more general analytics of data, maybe some statistics, histograms etc.
 
@@ -476,6 +481,8 @@ def graph_habitable_exoplanets(df):
 	histogram_exoplanets_per_star(habitable, './output/habitable_histogram_exoplanets_per_star.png', 
 		'A histogram to show the frequency of exoplanets with at least one \nin the habitable range orbiting a host star.')
 
+	return habitable # return the habitable df
+
 
 def calculate_gravity_and_planet_radius(df, index, planet_mass, planet_radius):
 
@@ -516,11 +523,94 @@ def calculate_gravity_and_planet_radius(df, index, planet_mass, planet_radius):
 
 	force = (GRAVITY_CONSTANT * planet_mass) / (planet_radius**2) # calculate the equation
 
-	gravity_compared_to_earth = force / 9.807 # divide g by earth g.
+	gravity_compared_to_earth = force / 9.807 # divide G by earth G.
 
 	df.loc[index,'accelaration_to_gravity'] = force # dip sample of results have been manually verified
 	df.loc[index,'gravity_compared_to_earth'] = gravity_compared_to_earth # dip sample of results have been manually verified
 	df.loc[index,'planet_actual_radius'] = radius # dip sample: HD 219134 b -> google shows radius 10206 km, my results are 10206.342 km
+
+
+def graph_gravity(exo, hab, savepathall, savepathhab):
+	''' 
+
+	A function to graph the gravity of exoplanets.
+
+	Produce as a scatter against their mass, it should be a straight line graph.. will be interesting to see
+	if the results are different. Doen as g force (compared to earths g-force of 1 g) as apposed to m s^-2
+
+	'''
+
+	# clear previous plot and make new plot
+	plt.clf()
+	combined = {'gravity_compared_to_earth': np.array(exo['gravity_compared_to_earth']), 
+	'planet_mass_in_kg' : np.array(exo['planet_mass_in_kg'])}
+
+	# temp dataframe to remove nans - if there are nan values in the dataframe, remove the row as we need both x and y values to plot.
+	t_df = pd.DataFrame(combined)
+	t_df.dropna(inplace = True)
+
+	# Create our final dataset, independant variable on the x
+	x_planet_mass = np.array(t_df['planet_mass_in_kg']) 
+	y_g_force = np.array(t_df['gravity_compared_to_earth'])
+
+	# add some data for earth (orange dot on plot)
+	earth_mass = 5.972e24
+	earth_g = 1
+
+	# plot
+	plt.clf()
+
+	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) \n of all detected exoplanets with Earth plotted as an organge point.", fontsize=10)
+	plt.xlabel("Planet's mass / kg")
+	plt.ylabel("G-Force compared to Earth / G's")
+
+	plt.scatter(x_planet_mass, y_g_force, s=5)
+	plt.scatter(earth_mass, earth_g, s=15)
+
+	# Humans could build the strength to survive up to 4 G's potentially (though i have seen studies suggeting we can only survive
+	# 3 G's for up to 2 minuets, so not sure on the reliability of this.) Add a line to indicate this cut off point. 
+	# Source: https://www.discovermagazine.com/the-sciences/whats-the-maximum-gravity-we-could-survive
+	plt.axhline(y=4, color='r', linestyle='-') # plot line
+
+	plt.savefig(savepathall)
+
+
+	# plot habitable planets
+
+	# clear previous plot and make new plot
+	plt.clf()
+	combined = {'gravity_compared_to_earth': np.array(hab['gravity_compared_to_earth']), 
+	'planet_mass_in_kg' : np.array(hab['planet_mass_in_kg'])}
+
+	# temp dataframe to remove nans - if there are nan values in the dataframe, remove the row as we need both x and y values to plot.
+	t_df = pd.DataFrame(combined)
+	t_df.dropna(inplace = True)
+
+	# Create our final dataset, independant variable on the x
+	x_planet_mass = np.array(t_df['planet_mass_in_kg']) 
+	y_g_force = np.array(t_df['gravity_compared_to_earth'])
+
+	# add some data for earth (orange dot on plot)
+	earth_mass = 5.972e24
+	earth_g = 1
+
+	# clear last plot
+	plt.clf()
+
+	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) of all \ndetected habitable exoplanets with Earth plotted as an organge point.", fontsize=10)
+	plt.xlabel("Planet's mass / kg")
+	plt.ylabel("G-Force compared to Earth / G's")
+
+	plt.scatter(x_planet_mass, y_g_force, s=5)
+	plt.scatter(earth_mass, earth_g, s=15)
+
+	# Humans could build the strength to survive up to 4 G's potentially (though i have seen studies suggeting we can only survive
+	# 3 G's for up to 2 minuets, so not sure on the reliability of this.) Add a line to indicate this cut off point. 
+	# Source: https://www.discovermagazine.com/the-sciences/whats-the-maximum-gravity-we-could-survive
+	plt.axhline(y=4, color='r', linestyle='-') # plot line
+
+	plt.savefig(savepathhab)
+
 
 
 def habitability_data_manipulation(df):
