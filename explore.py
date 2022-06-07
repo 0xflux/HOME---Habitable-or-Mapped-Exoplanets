@@ -30,6 +30,7 @@ def main():
 			extra data)
 		# Calculate gravity of all planets, calculate gravity of habitable - any that would be suitable for us to live on?
 			* First part done - pick up next from here, calculate are they suitable for us?
+		# Split into classes / modules
 		# Scrape web / other resources to find additional data such as mass, radius for a more complete dataset.
 
 	'''
@@ -501,6 +502,7 @@ def calculate_gravity_and_planet_radius(df, index, planet_mass, planet_radius):
 	# create an empty column - check if one of these does not exist, otherwise skip
 	if not 'accelaration_to_gravity' in df.columns:
 		df['accelaration_to_gravity'] = np.nan
+		df['gravity_compared_to_earth'] = np.nan
 
 	if not 'planet_actual_radius' in df.columns:
 		df['planet_actual_radius'] = np.nan
@@ -514,7 +516,10 @@ def calculate_gravity_and_planet_radius(df, index, planet_mass, planet_radius):
 
 	force = (GRAVITY_CONSTANT * planet_mass) / (planet_radius**2) # calculate the equation
 
+	gravity_compared_to_earth = force / 9.807 # divide g by earth g.
+
 	df.loc[index,'accelaration_to_gravity'] = force # dip sample of results have been manually verified
+	df.loc[index,'gravity_compared_to_earth'] = gravity_compared_to_earth # dip sample of results have been manually verified
 	df.loc[index,'planet_actual_radius'] = radius # dip sample: HD 219134 b -> google shows radius 10206 km, my results are 10206.342 km
 
 
