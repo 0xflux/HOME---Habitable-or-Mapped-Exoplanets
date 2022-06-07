@@ -681,6 +681,28 @@ def graph_gravity(exo, hab, savepathall, savepathhab):
 
 	plt.savefig("./output/g_force_all_exoplanets_habitable_radius.png")
 
+	# plot
+	plt.clf()
+
+	g_f = t_df['gravity_compared_to_earth'].to_dict()
+
+	# Create a pie chart of planets greater than, and less than, 4 G's of habitable exos
+	#less_than = len(combined[combined.iloc[:,0] <= 4])
+	less_than = len([g for g in g_f.values() if int(g) <= 4])
+	more_than = len([g for g in g_f.values() if int(g) >= 4.01])
+	#more_than = len(combined[combined.iloc[:,0] >= 4.01])
+
+	arr = np.array([less_than, more_than])
+
+	key = [f"Planets under 4G's: {less_than}", f"Planets greater than 4 G's: {more_than}"]
+	
+	plt.suptitle("A pie chart to show the number of habitable exoplanets that are over and under 4 G's.", fontsize=10)
+
+
+	plt.pie(arr, labels = key)
+
+	plt.savefig("./output/g_force_all_exoplanets_habitable_pie_chart.png")
+
 
 
 def habitability_data_manipulation(df):
