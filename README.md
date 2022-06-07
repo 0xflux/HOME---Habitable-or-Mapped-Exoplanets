@@ -8,6 +8,8 @@ A project to map and conduct data mining / analysis on exoplanets and their host
 
 To run, clone the project and run in your console / terminal: 'python3 explore.py'.
 
+As the project has grown far bigger than expected at this stage, I have split it into numerous modules which can be found within the deps/ subdirectory to handle physics & math, plotting and data cleansing.
+
 ## Blog!
 
 The below is a blog written by me, documenting my progress and a way for me to express what I am doing as I do it. It is intended to show my workflow periodically. I will provide a more well rounded writeup of my results when the project is complete. For now, please enjoy the blog where I may talk about bugs or challenges I have had to overcome, data which I find interesting, and anything unique to this project I would like to communicate! I may also refine or add to the data used in this investigation, so the below data in the blog may not be the final data I end up using in my analysis. Unfortunatley due to a change of username on GitHub (I much prefer my current username!) I messed up my repo, so I have lost a few commits, but I will continue to commit as I update my progress.
