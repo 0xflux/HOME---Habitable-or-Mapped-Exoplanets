@@ -560,7 +560,7 @@ def graph_gravity(exo, hab, savepathall, savepathhab):
 	# plot
 	plt.clf()
 
-	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) (vs. its radius) \n of all detected exoplanets with Earth plotted as an organge point.", fontsize=10)
+	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) (vs. its mass) \n of all detected exoplanets with Earth plotted as an organge point.", fontsize=10)
 	plt.xlabel("Planet's mass / kg")
 	plt.ylabel("G-Force compared to Earth / G's")
 
@@ -593,7 +593,7 @@ def graph_gravity(exo, hab, savepathall, savepathhab):
 	# clear last plot
 	plt.clf()
 
-	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) (vs. its radius) of all \ndetected habitable exoplanets with Earth plotted as an organge point.", fontsize=10)
+	plt.suptitle("A graph to show the G-force as a measure compared to earth (1 G) (vs. its mass) of all \ndetected habitable exoplanets with Earth plotted as an organge point.", fontsize=10)
 	plt.xlabel("Planet's mass / kg")
 	plt.ylabel("G-Force compared to Earth / G's")
 
