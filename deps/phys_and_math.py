@@ -157,6 +157,29 @@ def calculate_gravity_and_planet_radius(df, index, planet_mass, planet_radius):
 	df.loc[index,'planet_actual_radius'] = radius # dip sample: HD 219134 b -> google shows radius 10206 km, my results are 10206.342 km
 
 
+def compute_planet_state_from_temperature(df, index, planet_mass, planet_radius, planet_temp):
+
+	'''
+	Pseudo code:
+
+	1) method to convert K to *c (for general consumption graph)
+	2) scrape data from wikipedia on freezing, melting, boiling points of each element
+		* https://en.wikipedia.org/wiki/Melting_points_of_the_elements_(data_page)
+		* https://en.wikipedia.org/wiki/Boiling_points_of_the_elements_(data_page)#WebEl
+		* freezing -> just use anything under the melting point.
+	3) Convert these into a dictionary 
+	4) Obtain data about the most abundant, or the heaviest element, of a star of a particular system so I can
+	   work out the relevent temp of state changes for that system (no data for the planet itself as no spectra).
+	5) If 4 isnt possible, then calculate on the abundance of elements in our solar system
+	6) Choose the most relevent elements, or those in highest abundance (or those that are heaviest?) and then 
+	   calculate whether the planet will be an icy planet, rocky planet, gas planet, or a magma planet.
+	7) Graph the above, including bubbles indicate the relevent 'zones' for each state
+	8) Look at some stats.
+	
+	The hardest part is likely to be step 4, and finding this data...
+
+	'''
+
 
 def compute_radius_of_star(data_radius):
 	'''
