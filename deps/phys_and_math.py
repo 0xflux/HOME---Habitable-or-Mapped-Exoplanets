@@ -170,7 +170,19 @@ def compute_planet_state_from_temperature(df, index, planet_mass, planet_radius,
 	3) Convert these into a dictionary 
 	4) Obtain data about the most abundant, or the heaviest element, of a star of a particular system so I can
 	   work out the relevent temp of state changes for that system (no data for the planet itself as no spectra).
-	5) If 4 isnt possible, then calculate on the abundance of elements in our solar system
+	5) If 4 isnt possible, then calculate on the abundance of elements in our solar system, or do we go from iron based on the 
+	   nuclear fusion process?
+
+		https://academic.oup.com/mnras/article/450/3/2279/1056352
+		It might be worth reading this article to see what data I can extract from some of the emission tables provided by NASA
+		for the exoplanets. 
+
+		https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=emissionspec shows the emission 
+		spectrum from exoplanets, and WASP-80 b has an emission spectrum (central wavelength) of 3.6 um. How does this tell us
+		the planet is a gas giant? That I do not know.. This wavelength is longer than visible light, and above the emission
+		spectrums from atoms. So I'm not sure yet what this wavelength data relates to.
+
+
 	6) Choose the most relevent elements, or those in highest abundance (or those that are heaviest?) and then 
 	   calculate whether the planet will be an icy planet, rocky planet, gas planet, or a magma planet.
 	7) Graph the above, including bubbles indicate the relevent 'zones' for each state
