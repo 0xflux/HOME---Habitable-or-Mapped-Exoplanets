@@ -10,7 +10,7 @@ To run, clone the project and run in your console / terminal: 'python3 explore.p
 
 ## Blog!
 
-The below is a blog written by me, documenting my progress and a way for me to express what I am doing as I do it. It is intended to show my workflow periodically. I will provide a more well rounded writeup of my results when the project is complete. For now, please enjoy the blog where I may talk about bugs or challenges I have had to overcome, data which I find interesting, and anything unique to this project I would like to communicate! I may also refine or add to the data used in this investigation, so the below data in the blog may not be the final data I end up using in my analysis.
+The below is a blog written by me, documenting my progress and a way for me to express what I am doing as I do it. It is intended to show my workflow periodically. I will provide a more well rounded writeup of my results when the project is complete. For now, please enjoy the blog where I may talk about bugs or challenges I have had to overcome, data which I find interesting, and anything unique to this project I would like to communicate! I may also refine or add to the data used in this investigation, so the below data in the blog may not be the final data I end up using in my analysis. Unfortunatley due to a change of username on GitHub (I much prefer my current username!) I messed up my repo, so I have lost a few commits, but I will continue to commit as I update my progress.
 
 ### Scatter graph of the mass of exoplanets plotted against the temperature of their host star:
 
@@ -20,7 +20,7 @@ Most planets discovered are relativley low mass (to be expected), orbiting low t
 
 This was particually interesting to write, as I have had to use multiple conversions and equations to calcualte the luminosity of the star, and then convert it to a relative luminosity, as well as working with AU as a measurement of distance. I plan on building a module which will look at the orbit of the exoplanet, and see whether it fits into the habitable zone of the star it orbits. I have also manually reviewed data and calculations to ensure the math is correct.
 
-### Calculate luminosity of the star & calculate habitability zones of the star:
+### Significant progress - Calculate luminosity of the star & calculate habitability zones of the star:
 
 Calculates the luminosity of the host star, and adds data relating to the habitabilty zones of the star. Future versions will analyse this vs data of the exoplanets to see whether liquid water could exist on them. I would like to add some data from EM specrtums observed from the planets / stars to test for the presence of certain elements which may increase the chance of life forming.
 
