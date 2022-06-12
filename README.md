@@ -14,6 +14,8 @@ As the project has grown far bigger than expected at this stage, I have split it
 
 The below is a blog written by me, documenting my progress and a way for me to express what I am doing as I do it. It is intended to show my workflow periodically. I will provide a more well rounded writeup of my results when the project is complete. For now, please enjoy the blog where I may talk about bugs or challenges I have had to overcome, data which I find interesting, and anything unique to this project I would like to communicate! I may also refine or add to the data used in this investigation, so the below data in the blog may not be the final data I end up using in my analysis. Unfortunatley due to a change of username on GitHub (I much prefer my current username!) I messed up my repo, so I have lost a few commits, but I will continue to commit as I update my progress.
 
+Any major changes I'll probably do as a branch and pr, so don't forget to check live branches!
+
 ### Scatter graph of the mass of exoplanets plotted against the temperature of their host star:
 
 <img width="626" alt="image" src="https://user-images.githubusercontent.com/49762827/172062620-8a625d88-6952-4e3d-a7d7-565a883c5b1e.png">
@@ -58,4 +60,6 @@ I have then produced a pie chart showing the split between planets over, and und
 
 <img width="480" alt="image" src="https://user-images.githubusercontent.com/49762827/172440464-13aedf23-e625-479f-be5e-ec82835d22e4.png">
 
+### Major update being worked on as of 07/06/22
 
+I am currently working on a branch which requires a fair amount of research. I am going to examine data from NASA's exoplanet emission spectrum, and see whether this is the atomic emission spectrum that has been observed. However, I dont think it is - as an example, from https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=emissionspec WASP-80 b has a central wavelength of 3.6 microns. This is a longer wavelength by a factor of (approximatley) 10 than the wavelength emitted by hydrogen (0.4863 microns). To me, this data doesn't relate to atomic emission spectra. However, the paper here https://academic.oup.com/mnras/article/450/3/2279/1056352 states this planet is a (cold) gas giant, so, from what dataset have they used to come to that conclusion. I'll read the paper and see whether it explains the relevence of the 3.6 um central wavelength emission from the planet. This is taking me outside of my area of knowledge of my degree so far, so I'm really interested to read and learn this area of physics. Do I need to account for red shift in the difference between wavelengths?
