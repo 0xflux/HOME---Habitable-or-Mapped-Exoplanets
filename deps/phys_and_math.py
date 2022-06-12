@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import requests
+from bs4 import BeautifulSoup
 
 def calc_habitable_AU_values(radius, temp_of_star):
 	sb_const = 5.67e-8 # Stefan-Boltzmann constant
@@ -157,7 +159,8 @@ def calculate_gravity_and_planet_radius(df, index, planet_mass, planet_radius):
 	df.loc[index,'planet_actual_radius'] = radius # dip sample: HD 219134 b -> google shows radius 10206 km, my results are 10206.342 km
 
 
-def compute_planet_state_from_temperature(df, index, planet_mass, planet_radius, planet_temp):
+#def compute_planet_state_from_temperature(df, index, planet_mass, planet_radius, planet_temp):
+def compute_planet_state_from_temperature(df):
 
 	'''
 	Pseudo code:
@@ -191,6 +194,31 @@ def compute_planet_state_from_temperature(df, index, planet_mass, planet_radius,
 	The hardest part is likely to be step 4, and finding this data...
 
 	'''
+
+	# Get the url's and turn into soup
+	url_melting = "https://en.wikipedia.org/wiki/Melting_points_of_the_elements_(data_page)"
+	url_boiling = "https://en.wikipedia.org/wiki/Boiling_points_of_the_elements_(data_page)"
+
+	webpage = requests.get(url_melting)
+	soup = BeautifulSoup(webpage.content, "html.parser")
+
+
+	# Scrape the table and convert to a df
+	melting_point_table_scrape = soup.find(id='Melting_point').findNext('table')
+
+	melting_data_frame = pd.read_html(str(melting_point_table_scrape))[0]
+	melting_data_frame.to_excel('./output/freezing_point.xlsx')
+
+	# loop through and select the 'use' row for the final value
+	#for index, row in melting_data_frame.iterrows():
+		#print(row[:2].str.isdigit())
+		#print(f"row: {row}")
+
+
+	print(melting_data_frame.iloc[10])
+
+
+
 
 
 def compute_radius_of_star(data_radius):

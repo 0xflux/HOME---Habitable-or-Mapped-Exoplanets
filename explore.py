@@ -6,6 +6,7 @@ from pathlib import Path
 
 from deps import data_cleansing as dc
 from deps import plot_logic as pl
+from deps import phys_and_math as pam
 
 def main():
 
@@ -84,6 +85,8 @@ def main():
 
 	# graph the gravitational forces for both habitable planets and non-habitable.
 	pl.graph_gravity(exoplanets, habitable, './output/g_force_all_exoplanets.png', './output/g_force_habitable_exoplanets.png')
+
+	pam.compute_planet_state_from_temperature(exoplanets)
 
 	# TODO - more general analytics of data, maybe some statistics, histograms etc.
 
