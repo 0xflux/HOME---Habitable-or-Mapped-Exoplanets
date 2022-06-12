@@ -90,6 +90,41 @@ def histogram_exoplanets_per_star(df, savepath, graph_title):
 	plt.savefig(savepath)
 
 
+def graph_density(exo, savepath):
+
+	'''
+	A function to plot the density against mass
+	'''
+
+	# clear previous plot and make new plot
+	plt.clf()
+	combined = {'planet_density': np.array(exo['planet_density']), 
+	'planet_mass_in_kg' : np.array(exo['planet_mass_in_kg'])}
+
+	# temp dataframe to remove nans - if there are nan values in the dataframe, remove the row as we need both x and y values to plot.
+	t_df = pd.DataFrame(combined)
+	t_df.dropna(inplace = True)
+
+	# Create our final dataset, independant variable on the x
+	x_planet_mass = np.array(t_df['planet_mass_in_kg']) 
+	y_dens = np.array(t_df['planet_density'])
+
+	# add some data for earth (orange dot on plot)
+	earth_mass = 5.972e24
+	earth_dens = 5520 # source http://astronomy.nmsu.edu/mchizek/105/LABS/EarthDensity.pdf
+
+	plt.suptitle("A graph to show the density vs its mass of all detected exoplanets, with Earth plotted as an organge point.", fontsize=10)
+	plt.xlabel("Planet's mass / kg")
+	plt.ylabel("Planet's density / kg m^-3")
+
+	plt.scatter(x_planet_mass, y_dens, s=10)
+	plt.scatter(earth_mass, earth_dens, s=10)
+
+	plt.savefig(savepath)
+
+	plt.show()
+
+
 def graph_gravity(exo, hab, savepathall, savepathhab):
 	''' 
 

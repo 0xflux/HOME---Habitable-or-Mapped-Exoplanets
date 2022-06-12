@@ -88,6 +88,8 @@ def main():
 
 	pam.compute_planet_state_from_temperature(exoplanets)
 
+	pl.graph_density(exoplanets, './output/density_all_planets.png')
+
 	# TODO - more general analytics of data, maybe some statistics, histograms etc.
 
 	# lets have a look at the solar data
