@@ -60,6 +60,27 @@ I have then produced a pie chart showing the split between planets over, and und
 
 <img width="480" alt="image" src="https://user-images.githubusercontent.com/49762827/172440464-13aedf23-e625-479f-be5e-ec82835d22e4.png">
 
-### Major update being worked on as of 07/06/22
+### Determine whether a planet is gas, rocky, or iron based.
 
-I am currently working on a branch which requires a fair amount of research. I am going to examine data from NASA's exoplanet emission spectrum, and see whether this is the atomic emission spectrum that has been observed. However, I dont think it is - as an example, from https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=emissionspec WASP-80 b has a central wavelength of 3.6 microns. This is a longer wavelength by a factor of (approximatley) 10 than the wavelength emitted by hydrogen (0.4863 microns). To me, this data doesn't relate to atomic emission spectra. However, the paper here https://academic.oup.com/mnras/article/450/3/2279/1056352 states this planet is a (cold) gas giant, so, from what dataset have they used to come to that conclusion. I'll read the paper and see whether it explains the relevence of the 3.6 um central wavelength emission from the planet. This is taking me outside of my area of knowledge of my degree so far, so I'm really interested to read and learn this area of physics. Do I need to account for red shift in the difference between wavelengths?
+I have now implemented a fairly simple feature to calculate and plot the state of a planet. I approached this wrong at first, where I have scraped and processed (BeautifulSoup & Pandas) two tables from wikipedia relating to the melting and boiling points of all of the different elements. I was going to calculate the temperature of the planet against these temperatures, however, that itself does not determine whether a planet is a gas giant (or dwarf) or not. I have left that code in, as I am quite proud of the scraping & data cleansing required for that.
+
+Data plotted as a scatter graph:
+
+<img width="1233" alt="image" src="https://user-images.githubusercontent.com/49762827/173242900-4bc58381-33f3-47f7-ade2-8988019e761d.png">
+
+Data plotted as a histogram:
+
+<img width="1233" alt="image" src="https://user-images.githubusercontent.com/49762827/173242981-17048343-57c4-4abe-b480-a7f50bb45e54.png">
+
+What is really interesting about this data is that just because a planet is in the habitable zone, it is not always habitable. For instance, the research conducted so far shows that a planet must:
+
+* Be in the habitable zone,
+* Have a gravity consistant with life (as we know it), and
+* Not be a gaseous planet
+
+There are a few other factors I would like to look at, including:
+
+* Temperature, and
+* Can the mass support an atmosphere.
+
+Then, I can finally draw conclusions from my data!
