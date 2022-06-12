@@ -224,6 +224,7 @@ def clean_data_exoplanets(df, len_of_list):
 	exoplanets['planet_mass_in_kg'] = np.nan
 	exoplanets['planet_actual_radius'] = np.nan
 	exoplanets['planet_density'] = np.nan
+	exoplanets['is_planet_gas_giant'] = np.nan
 
 	# Convert parsecs to light years
 	# Convert planet_mass_compared_to_earth to actual mass (kg)
@@ -263,6 +264,16 @@ def clean_data_exoplanets(df, len_of_list):
 		# calculate density in kg m^-3
 		density = pam.compute_density_of_planet(exoplanets.loc[index, 'planet_mass_in_kg'], exoplanets.loc[index, 'planet_radius_compared_to_earth'])
 		exoplanets.loc[index,'planet_density'] = density
+
+		# calc chances of planet being a gas giant based off of this source:
+		# source: https://www.open.edu/openlearn/mod/oucontent/view.php?id=66947&extra=thumbnailfigure_idm491
+		if density < 3000:
+			exoplanets.loc[index,'is_planet_gas_giant'] = 1 # if above 3000 kg m^-3, it is likely gas
+		if density > 3000:
+			exoplanets.loc[index,'is_planet_gas_giant'] = 0 # if above 3000 kg m^-3, it is likely rocky
+		if density > 7900:
+			exoplanets.loc[index,'is_planet_gas_giant'] = 2 # if above 3000 kg m^-3, it is likely iron
+
 
 
 	# Sort exoplanets by distance from our solar system AND sort by the least NaNs
