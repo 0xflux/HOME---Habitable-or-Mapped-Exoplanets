@@ -115,7 +115,8 @@ def graph_density(exo, savepath, savepath_histogram, hab=1):
 	earth_dens = 5520 # source http://astronomy.nmsu.edu/mchizek/105/LABS/EarthDensity.pdf
 
 	if hab == 1:
-		plt.suptitle("A graph to show the density vs its mass of habitable-zone exoplanets, \nwith Earth plotted as an organge point.", fontsize=10)
+		title = "A graph to show the density vs its mass of habitable-zone exoplanets, \nwith Earth plotted as an organge point."
+		plt.figure(figsize=(8,8)).suptitle(title,fontsize=10)
 	else: 
 		plt.suptitle("A graph to show the density vs its mass of all detected exoplanets, \nwith Earth plotted as an organge point.", fontsize=10)
 
