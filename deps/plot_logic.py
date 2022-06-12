@@ -114,7 +114,11 @@ def graph_density(exo, savepath, savepath_histogram, hab=1):
 	earth_mass = 5.972e24
 	earth_dens = 5520 # source http://astronomy.nmsu.edu/mchizek/105/LABS/EarthDensity.pdf
 
-	plt.suptitle("A graph to show the density vs its mass of all detected exoplanets, with Earth plotted as an organge point.", fontsize=10)
+	if hab == 1:
+		plt.suptitle("A graph to show the density vs its mass of habitable-zone exoplanets, \nwith Earth plotted as an organge point.", fontsize=10)
+	else: 
+		plt.suptitle("A graph to show the density vs its mass of all detected exoplanets, \nwith Earth plotted as an organge point.", fontsize=10)
+
 	plt.xlabel("Planet's mass / kg")
 	plt.ylabel("Planet's density / kg m^-3")
 
@@ -126,8 +130,12 @@ def graph_density(exo, savepath, savepath_histogram, hab=1):
 	# scatter graph is too busy to provide any decent interpretations, so I'll use a histogram instead:
 
 	plt.clf()
-	
-	plt.suptitle("A histogram to show the frequency of different planet types.",fontsize=10)
+
+	if hab == 1:
+		plt.suptitle("A histogram to show the frequency of different planet types of \nhabitable-zone planets.",fontsize=10)
+	else: 
+		plt.suptitle("A histogram to show the frequency of different planet types.",fontsize=10)
+
 	plt.ylabel("Frequency")
 	plt.xlabel("Planet type")
 	plt.xticks([]) # remove numbers off of x axis
