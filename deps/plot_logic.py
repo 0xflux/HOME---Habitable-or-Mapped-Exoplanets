@@ -122,7 +122,9 @@ def graph_density(exo, savepath):
 
 	plt.savefig(savepath)
 
-	plt.show()
+	# scatter graph is too busy to provide any decent interpretations, so I'll use a histogram instead:
+
+	
 
 
 def graph_gravity(exo, hab, savepathall, savepathhab):
