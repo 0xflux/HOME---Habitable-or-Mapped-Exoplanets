@@ -88,7 +88,10 @@ def main():
 
 	pam.compute_planet_state_from_temperature(exoplanets)
 
-	pl.graph_density(exoplanets, './output/density_all_planets.png')
+	# graph the density's and thus planet state of each planet
+	# 0 flag just for formatting logic
+	pl.graph_density(exoplanets, './output/density_all_planets.png', './output/density_all_planets-histogram.png', 0)
+	pl.graph_density(habitable, './output/density_hab_planets.png', './output/density_hab_planets-histogram.png')
 
 	# TODO - more general analytics of data, maybe some statistics, histograms etc.
 
