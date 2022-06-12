@@ -90,6 +90,69 @@ def histogram_exoplanets_per_star(df, savepath, graph_title):
 	plt.savefig(savepath)
 
 
+def graph_density(exo, savepath, savepath_histogram, hab=1):
+
+	'''
+	A function to plot the density against mass
+	'''
+
+	# clear previous plot and make new plot
+	plt.clf()
+	combined = {'planet_density': np.array(exo['planet_density']), 
+	'planet_mass_in_kg' : np.array(exo['planet_mass_in_kg']),
+	'is_planet_gas_giant' : np.array(exo['is_planet_gas_giant'])}
+
+	# temp dataframe to remove nans - if there are nan values in the dataframe, remove the row as we need both x and y values to plot.
+	t_df = pd.DataFrame(combined)
+	t_df.dropna(inplace = True)
+
+	# Create our final dataset, independant variable on the x
+	x_planet_mass = np.array(t_df['planet_mass_in_kg']) 
+	y_dens = np.array(t_df['planet_density'])
+
+	# add some data for earth (orange dot on plot)
+	earth_mass = 5.972e24
+	earth_dens = 5520 # source http://astronomy.nmsu.edu/mchizek/105/LABS/EarthDensity.pdf
+
+	plt.suptitle("A graph to show the density vs its mass of all detected exoplanets, with Earth plotted as an organge point.", fontsize=10)
+	plt.xlabel("Planet's mass / kg")
+	plt.ylabel("Planet's density / kg m^-3")
+
+	plt.scatter(x_planet_mass, y_dens, s=10)
+	plt.scatter(earth_mass, earth_dens, s=10)
+
+	plt.savefig(savepath)
+
+	# scatter graph is too busy to provide any decent interpretations, so I'll use a histogram instead:
+
+	plt.clf()
+	
+	plt.suptitle("A histogram to show the frequency of different planet types.",fontsize=10)
+	plt.ylabel("Frequency")
+	plt.xlabel("Planet type")
+	plt.xticks([]) # remove numbers off of x axis
+	
+	num_bins, edges, bars = plt.hist(t_df['is_planet_gas_giant'], bins=range(0,4), rwidth=0.7)
+
+	# some logic for text placement
+	if hab == 1:
+		plt.text(0.25, 0.1, 'Rocky planet')
+		plt.text(1.25, 0.1, 'Gas planet')
+		plt.text(2.25, 0.1, 'Iron planet')
+	else:
+		plt.text(0.25, 7, 'Rocky planet')
+		plt.text(1.25, 7, 'Gas planet')
+		plt.text(2.25, 7, 'Iron planet')
+
+
+	# add numbers onto plot as low values are unreadable
+	plt.bar_label(bars)
+
+	plt.savefig(savepath_histogram)
+
+
+
+
 def graph_gravity(exo, hab, savepathall, savepathhab):
 	''' 
 
