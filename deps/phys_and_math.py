@@ -1,8 +1,6 @@
 import numpy as np
 import pandas as pd
-import requests
-import re
-from bs4 import BeautifulSoup
+from . import data_cleansing as dc
 
 def calc_habitable_AU_values(radius, temp_of_star):
 	sb_const = 5.67e-8 # Stefan-Boltzmann constant
@@ -164,6 +162,16 @@ def calculate_gravity_and_planet_radius(df, index, planet_mass, planet_radius):
 def compute_planet_state_from_temperature(df):
 
 	'''
+
+	Update:
+
+	It turns out, to calculate whether it is likely a gas giant or solid, this is calculated by the density
+	of the planet, which actually makes a lot of sense. A planet with a high mass, but low density, is likely to be
+	a gas planet (or it has a significant atmosphere / made of ice). Graphing this will give a good indication where to go next.
+
+
+	Pre-update:
+
 	Pseudo code:
 
 	1) method to convert K to *c (for general consumption graph)
@@ -197,110 +205,7 @@ def compute_planet_state_from_temperature(df):
 	'''
 
 	# Scrape data from wikipedia for state changes of each element in the periodic table
-	df_element_change_of_state = scrape_wikipedia_data_regarding_state_change()
-
-
-def scrape_wikipedia_data_regarding_state_change():
-	'''
-
-	A method to scrape data from wikipedia regarding the melting and boiling point of the elements
-
-	Returns a dataframe with the data. There are a few NaN values, but for the purposes of this excersise, this 
-	shouldn't impact the overall accuracy.
-
-	'''
-
-	# create an empty dataframe which will hold the state change values of each element
-	df_element_change_of_state = pd.DataFrame(columns=['element', 'melting_point', 'boiling_point'])
-
-	# Get the url's and turn into soup
-	url_melting = "https://en.wikipedia.org/wiki/Melting_points_of_the_elements_(data_page)"
-	url_boiling = "https://en.wikipedia.org/wiki/Boiling_points_of_the_elements_(data_page)"
-
-	### get data related to the melting points ###
-	webpage = requests.get(url_melting)
-	soup = BeautifulSoup(webpage.content, "html.parser")
-
-	# Scrape the table and convert to a df
-	melting_point_table_scrape = soup.find(id='Melting_point').findNext('table')
-
-	# convert into dataframe 
-	melting_data_frame = pd.read_html(str(melting_point_table_scrape))[0] # read html into table
-	df_element_change_of_state = parse_scraped_data_from_wikipedia_regarding_state_change(df_element_change_of_state, melting_data_frame)
-
-
-	### get data relating to the boiling points ###
-	webpage = requests.get(url_boiling)
-	soup = BeautifulSoup(webpage.content, "html.parser")
-
-	# Scrape the table and convert to a df
-	melting_point_table_scrape = soup.find(id='Boiling_point').findNext('table')
-	boiling_point_data_frame = pd.read_html(str(melting_point_table_scrape))[0]
-
-	# rename the cols so that I can reference them properly in the method called next
-	boiling_point_data_frame.columns = ['Reference', 'Kelvin', 'degrees_c', 'farh']
-
-	# scrape the data for boiling point, and set flag to 1 to indicate this in below function
-	df_element_change_of_state = parse_scraped_data_from_wikipedia_regarding_state_change(df_element_change_of_state, boiling_point_data_frame, 1)
-
-	return df_element_change_of_state
-
-
-def parse_scraped_data_from_wikipedia_regarding_state_change(df_element_change_of_state, input_data_frame, is_melting=0):
-
-	'''
-	A method to handle the parsing and sanitising of data scraped from wikipedia.
-
-	Takes in: the overall dataframe relating to the final result, input data from the table, and a flag whether this is melting or freezing.
-
-	Returns: dataframe
-	'''
-
-	# manually add hydrogen to the dataframe, as the scrape includes it as a column heading, as opposed to data
-	if is_melting == 0:
-		input_data_frame.loc[-1] = ['1 H hydrogen', np.nan, np.nan, np.nan, np.nan]
-	else:
-		input_data_frame.loc[-1] = ['1 H hydrogen', np.nan, np.nan, np.nan]
-
-	# resort index
-	input_data_frame.index = input_data_frame.index + 1
-	input_data_frame.sort_index(inplace=True)
-
-	# iterate through the reference column, every time it starts with a number, this is the atomic number of the element
-	# what I then want to do is find the 'use' kelvin value of the element. I'll use the fact the atomic number is first in
-	# the reference column as a hook to know which element the data relates to
-	for index, row in input_data_frame.iterrows():
-
-		# get the data in the reference column at the specific index we are iterating over
-		if is_melting == 0:
-			frame_reference = input_data_frame['Reference'].iloc[index].to_string(index=False)
-		else:
-			frame_reference = input_data_frame['Reference'].iloc[index]
-
-		# if the row starts with a number (it is the atomic number) so lets get the kelvin data
-		# use regex to only keep numeric values and decimal place within the data
-		if frame_reference[0].isdigit():
-			if is_melting == 0:
-				kelvin = input_data_frame['Kelvin'].iloc[index+1].to_string(index=False) # moved inside if to prevent out of bounds
-				kelvin = re.sub("[^0-9.]", "", kelvin)
-			else:
-				kelvin = input_data_frame['Kelvin'].iloc[index+1] # moved inside if to prevent out of bounds
-				kelvin = re.sub("[^0-9.]", "", str(kelvin))
-
-			# where kelvin is blank set to nan, 3 occurrences of this
-			if kelvin == '':
-				kelvin = np.nan # setting to 0 would mess with averages, so set to nan instead
-
-
-			# add values into the dataframe
-			if is_melting == 0:
-				df_element_change_of_state.loc[len(df_element_change_of_state)]=[frame_reference, float(kelvin), np.nan] 
-
-			else:
-				row_of_ele = df_element_change_of_state[df_element_change_of_state['element'] == frame_reference].index # get the row with the same element
-				df_element_change_of_state.loc[row_of_ele,'boiling_point'] = float(kelvin) # correct math now with row insertion
-
-	return df_element_change_of_state
+	df_element_change_of_state = dc.scrape_wikipedia_data_regarding_state_change()
 
 
 def compute_radius_of_star(data_radius):
