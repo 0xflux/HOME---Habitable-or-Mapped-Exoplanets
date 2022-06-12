@@ -208,6 +208,36 @@ def compute_planet_state_from_temperature(df):
 	df_element_change_of_state = dc.scrape_wikipedia_data_regarding_state_change()
 
 
+def compute_density_of_planet(planet_mass_in_kg, planet_radius_compared_to_earth):
+	'''
+	A method to calculate the density of a planet.
+
+	Density = mass / volume
+
+	Volume = 4/3 x pi x radius^3
+	
+	Test data:
+
+	HD 219134 b
+	Rad comp to earth: 1.602
+	Mass: 2.83 x 10^25 kg
+	computed density: 6356.223812 kg m^-3
+
+	Checking the data, wikipedia shows this planet as having a mean density of 6.36 g cm^-3,
+	when converting this, it is 6360 kg m^-3, which is correct as per my data.
+	Source: https://en.wikipedia.org/wiki/HD_219134_b
+
+	'''
+
+	earths_radius = 6371 # km
+	
+	volume = (4/3) * np.pi * ((planet_radius_compared_to_earth * (earths_radius * 1000)) ** 3) # x 1000 for unit conv km to m 
+
+	density = planet_mass_in_kg / volume # kg is the SI for density so doesnt need converting
+
+	return density
+
+
 def compute_radius_of_star(data_radius):
 	'''
 	Mean radius of the sun: https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html

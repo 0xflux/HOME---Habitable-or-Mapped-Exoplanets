@@ -223,6 +223,7 @@ def clean_data_exoplanets(df, len_of_list):
 	# create empty col's as required
 	exoplanets['planet_mass_in_kg'] = np.nan
 	exoplanets['planet_actual_radius'] = np.nan
+	exoplanets['planet_density'] = np.nan
 
 	# Convert parsecs to light years
 	# Convert planet_mass_compared_to_earth to actual mass (kg)
@@ -258,6 +259,10 @@ def clean_data_exoplanets(df, len_of_list):
 
 		# calculate the accelaration due to gravity on the planet:
 		pam.calculate_gravity_and_planet_radius(exoplanets, index, exoplanets.loc[index, 'planet_mass_in_kg'], row['planet_radius_compared_to_earth'])
+
+		# calculate density in kg m^-3
+		density = pam.compute_density_of_planet(exoplanets.loc[index, 'planet_mass_in_kg'], exoplanets.loc[index, 'planet_radius_compared_to_earth'])
+		exoplanets.loc[index,'planet_density'] = density
 
 
 	# Sort exoplanets by distance from our solar system AND sort by the least NaNs
