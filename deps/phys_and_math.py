@@ -163,49 +163,19 @@ def compute_planet_state_from_temperature(df):
 
 	'''
 
-	Update:
+	I was going to calculate the state of the planet based on its temperature, calculating the melting/boiling point
+	of each element in the periodic table. However, I have discovered that whether a planet is gas / rocky depends on its
+	density instead. A planet with a high mass, but low density, is likely to be a gas planet (or it has a significant 
+	atmosphere / made of ice). Graphing this will give a good indication where to go next.
 
-	It turns out, to calculate whether it is likely a gas giant or solid, this is calculated by the density
-	of the planet, which actually makes a lot of sense. A planet with a high mass, but low density, is likely to be
-	a gas planet (or it has a significant atmosphere / made of ice). Graphing this will give a good indication where to go next.
-
-
-	Pre-update:
-
-	Pseudo code:
-
-	1) method to convert K to *c (for general consumption graph)
-	2) scrape data from wikipedia on freezing, melting, boiling points of each element
-		* https://en.wikipedia.org/wiki/Melting_points_of_the_elements_(data_page)
-		* https://en.wikipedia.org/wiki/Boiling_points_of_the_elements_(data_page)#WebEl
-		* freezing -> just use anything under the melting point.
-	3) Convert these into a dictionary 
-	4) Obtain data about the most abundant, or the heaviest element, of a star of a particular system so I can
-	   work out the relevent temp of state changes for that system (no data for the planet itself as no spectra).
-	5) If 4 isnt possible, then calculate on the abundance of elements in our solar system, or do we go from iron based on the 
-	   nuclear fusion process?
-
-		https://academic.oup.com/mnras/article/450/3/2279/1056352
-		It might be worth reading this article to see what data I can extract from some of the emission tables provided by NASA
-		for the exoplanets. 
-
-		https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=emissionspec shows the emission 
-		spectrum from exoplanets, and WASP-80 b has an emission spectrum (central wavelength) of 3.6 um. How does this tell us
-		the planet is a gas giant? That I do not know.. This wavelength is longer than visible light, and above the emission
-		spectrums from atoms. So I'm not sure yet what this wavelength data relates to.
-
-
-	6) Choose the most relevent elements, or those in highest abundance (or those that are heaviest?) and then 
-	   calculate whether the planet will be an icy planet, rocky planet, gas planet, or a magma planet.
-	7) Graph the above, including bubbles indicate the relevent 'zones' for each state
-	8) Look at some stats.
-	
-	The hardest part is likely to be step 4, and finding this data...
+	So, I have left the code in (this file and data_cleansing) to 1) demonstrate web scraping & manipulation etc, and 2)
+	in case it becomes relevant in the future. For now, it is redundant - however it is functional and produces a dataframe
+	of all the melting & boiling points of all of the elements.
 
 	'''
 
 	# Scrape data from wikipedia for state changes of each element in the periodic table
-	df_element_change_of_state = dc.scrape_wikipedia_data_regarding_state_change()
+	df_element_change_of_state = dc.scrape_wikipedia_data_regarding_state_change() # this is the dataframe
 
 
 def compute_density_of_planet(planet_mass_in_kg, planet_radius_compared_to_earth):
