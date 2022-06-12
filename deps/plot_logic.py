@@ -90,7 +90,7 @@ def histogram_exoplanets_per_star(df, savepath, graph_title):
 	plt.savefig(savepath)
 
 
-def graph_density(exo, savepath):
+def graph_density(exo, savepath, savepath_histogram, hab=1):
 
 	'''
 	A function to plot the density against mass
@@ -99,7 +99,8 @@ def graph_density(exo, savepath):
 	# clear previous plot and make new plot
 	plt.clf()
 	combined = {'planet_density': np.array(exo['planet_density']), 
-	'planet_mass_in_kg' : np.array(exo['planet_mass_in_kg'])}
+	'planet_mass_in_kg' : np.array(exo['planet_mass_in_kg']),
+	'is_planet_gas_giant' : np.array(exo['is_planet_gas_giant'])}
 
 	# temp dataframe to remove nans - if there are nan values in the dataframe, remove the row as we need both x and y values to plot.
 	t_df = pd.DataFrame(combined)
@@ -124,7 +125,32 @@ def graph_density(exo, savepath):
 
 	# scatter graph is too busy to provide any decent interpretations, so I'll use a histogram instead:
 
+	plt.clf()
 	
+	plt.suptitle("A histogram to show the frequency of different planet types.",fontsize=10)
+	plt.ylabel("Frequency")
+	plt.xlabel("Planet type")
+	plt.xticks([]) # remove numbers off of x axis
+	
+	num_bins, edges, bars = plt.hist(t_df['is_planet_gas_giant'], bins=range(0,4), rwidth=0.7)
+
+	# some logic for text placement
+	if hab == 1:
+		plt.text(0.25, 0.1, 'Rocky planet')
+		plt.text(1.25, 0.1, 'Gas planet')
+		plt.text(2.25, 0.1, 'Iron planet')
+	else:
+		plt.text(0.25, 7, 'Rocky planet')
+		plt.text(1.25, 7, 'Gas planet')
+		plt.text(2.25, 7, 'Iron planet')
+
+
+	# add numbers onto plot as low values are unreadable
+	plt.bar_label(bars)
+
+	plt.savefig(savepath_histogram)
+
+
 
 
 def graph_gravity(exo, hab, savepathall, savepathhab):
