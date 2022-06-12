@@ -2,3 +2,4 @@ deps/.DS_Store
 .DS_Store
 data_as_ly.xlsx
 *cleaned_d*.xlsx
+*.pyc
