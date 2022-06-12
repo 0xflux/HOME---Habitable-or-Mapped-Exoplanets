@@ -6,6 +6,7 @@ from pathlib import Path
 
 from deps import data_cleansing as dc
 from deps import plot_logic as pl
+from deps import phys_and_math as pam
 
 def main():
 
@@ -14,9 +15,7 @@ def main():
 	# https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PS, I have included a copy of the csv.
 
 	'''
-		* Work out habitability zone - can I use a ML model to determine whether there is habitability?
 		* Graph out the black body spectrum of a system's star - from the black body work out its temperature
-		* Do a map of systems
 		# Histograms:
 			* Histogram distance to exo from earth vs number of exo
 			* Histogram radius of planet against earth, and jupiter
@@ -27,13 +26,6 @@ def main():
 		# Do some stats on the habitable planets
 		# Can i look at any spectra re the planets?
 		# Look at solar data
-		# Can i find pictures of the planets from scraping the web:
-			* https://exoplanetarchive.ipac.caltech.edu/docs/data.html
-			* http://www.openexoplanetcatalogue.com/systems/ (note, this contains data that NASA / Caltech doesnt have -> look into obtaining 
-			extra data)
-		# Calculate gravity of all planets, calculate gravity of habitable - any that would be suitable for us to live on?
-			* First part done - pick up next from here, calculate are they suitable for us?
-		# Split into classes / modules
 		# Scrape web / other resources to find additional data such as mass, radius for a more complete dataset.
 
 	'''
@@ -85,7 +77,12 @@ def main():
 	# graph the gravitational forces for both habitable planets and non-habitable.
 	pl.graph_gravity(exoplanets, habitable, './output/g_force_all_exoplanets.png', './output/g_force_habitable_exoplanets.png')
 
-	# TODO - more general analytics of data, maybe some statistics, histograms etc.
+	pam.compute_planet_state_from_temperature(exoplanets)
+
+	# graph the density's and thus planet state of each planet
+	# 0 flag just for formatting logic
+	pl.graph_density(exoplanets, './output/density_all_planets.png', './output/density_all_planets-histogram.png', 0)
+	pl.graph_density(habitable, './output/density_hab_planets.png', './output/density_hab_planets-histogram.png')
 
 	# lets have a look at the solar data
 	'''

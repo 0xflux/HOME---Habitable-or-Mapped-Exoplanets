@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from . import data_cleansing as dc
 
 def calc_habitable_AU_values(radius, temp_of_star):
 	sb_const = 5.67e-8 # Stefan-Boltzmann constant
@@ -156,6 +157,55 @@ def calculate_gravity_and_planet_radius(df, index, planet_mass, planet_radius):
 	df.loc[index,'gravity_compared_to_earth'] = gravity_compared_to_earth # dip sample of results have been manually verified
 	df.loc[index,'planet_actual_radius'] = radius # dip sample: HD 219134 b -> google shows radius 10206 km, my results are 10206.342 km
 
+
+#def compute_planet_state_from_temperature(df, index, planet_mass, planet_radius, planet_temp):
+def compute_planet_state_from_temperature(df):
+
+	'''
+
+	I was going to calculate the state of the planet based on its temperature, calculating the melting/boiling point
+	of each element in the periodic table. However, I have discovered that whether a planet is gas / rocky depends on its
+	density instead. A planet with a high mass, but low density, is likely to be a gas planet (or it has a significant 
+	atmosphere / made of ice). Graphing this will give a good indication where to go next.
+
+	So, I have left the code in (this file and data_cleansing) to 1) demonstrate web scraping & manipulation etc, and 2)
+	in case it becomes relevant in the future. For now, it is redundant - however it is functional and produces a dataframe
+	of all the melting & boiling points of all of the elements.
+
+	'''
+
+	# Scrape data from wikipedia for state changes of each element in the periodic table
+	df_element_change_of_state = dc.scrape_wikipedia_data_regarding_state_change() # this is the dataframe
+
+
+def compute_density_of_planet(planet_mass_in_kg, planet_radius_compared_to_earth):
+	'''
+	A method to calculate the density of a planet.
+
+	Density = mass / volume
+
+	Volume = 4/3 x pi x radius^3
+	
+	Test data:
+
+	HD 219134 b
+	Rad comp to earth: 1.602
+	Mass: 2.83 x 10^25 kg
+	computed density: 6356.223812 kg m^-3
+
+	Checking the data, wikipedia shows this planet as having a mean density of 6.36 g cm^-3,
+	when converting this, it is 6360 kg m^-3, which is correct as per my data.
+	Source: https://en.wikipedia.org/wiki/HD_219134_b
+
+	'''
+
+	earths_radius = 6371 # km
+	
+	volume = (4/3) * np.pi * ((planet_radius_compared_to_earth * (earths_radius * 1000)) ** 3) # x 1000 for unit conv km to m 
+
+	density = planet_mass_in_kg / volume # kg is the SI for density so doesnt need converting
+
+	return density
 
 
 def compute_radius_of_star(data_radius):
