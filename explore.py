@@ -27,6 +27,7 @@ def main():
 		# Can i look at any spectra re the planets?
 		# Look at solar data
 		# Scrape web / other resources to find additional data such as mass, radius for a more complete dataset.
+		# it would be interesting to see if planets are iron / rocky close to the star, and the further out do they go to gas giants?
 
 	'''
 
@@ -83,6 +84,8 @@ def main():
 	# 0 flag just for formatting logic
 	pl.graph_density(exoplanets, './output/density_all_planets.png', './output/density_all_planets-histogram.png', 0)
 	pl.graph_density(habitable, './output/density_hab_planets.png', './output/density_hab_planets-histogram.png')
+
+	pl.print_optimal_planets_for_life(exoplanets)
 
 	# lets have a look at the solar data
 	'''
