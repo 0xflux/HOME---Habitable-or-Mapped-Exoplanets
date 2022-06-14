@@ -10,6 +10,31 @@ To run, clone the project and run in your console / terminal: 'python3 explore.p
 
 As the project has grown far bigger than expected at this stage, I have split it into numerous modules which can be found within the deps/ subdirectory to handle physics & math, plotting and data cleansing.
 
+# Result!
+
+The following is the output result of my program, which is a result of the input data! There is still a few tweaks I would like to make, however the first lot of results can be found as follows! This is very exciting, and it's amazing to think that results such as this could be the focus of major scientific discovery!
+
+    Potentially habitable planet found! Planet name: K2-18 b, it has an orbital period of:
+			32.94 days (4.s.f) (meaning it takes 32.94 (4.s.f) many days to orbit its star), 
+			it has a possible temperature of: 10.9 degrees celsius (3.s.f), 
+			the temperature of its star is 3457.0 Kelvin, 
+			the radius of the star is: 285237.0 km, 
+			the distance to the planet is 124.0261811215556, 
+			the radius of the planet is 15099.27 km,
+			the planet lives in the habitable zone of the star and is not a gas planet or an iron planet. Gravity has an acceleration of 
+			 15.6 meters per second per second (3.s.f), which is 1.59 (3.s.f) times that of Earth.
+    
+    Potentially habitable planet found! Planet name: TRAPPIST-1 e, it has an orbital period of:
+			6.1 days (4.s.f) (meaning it takes 6.1 (4.s.f) many days to orbit its star), 
+			it has a possible temperature of: -22.1 degrees celsius (3.s.f), 
+			the temperature of its star is 2559.0 Kelvin, 
+			the radius of the star is: 83484.0 km, 
+			the distance to the planet is 39.0, 
+			the radius of the planet is 5848.578 km,
+			the planet lives in the habitable zone of the star and is not a gas planet or an iron planet. Gravity has an acceleration of 
+			 7.22 meters per second per second (3.s.f), which is 0.736 (3.s.f) times that of Earth.
+
+
 ## Blog!
 
 The below is a blog written by me, documenting my progress and a way for me to express what I am doing as I do it. It is intended to show my workflow periodically. I will provide a more well rounded writeup of my results when the project is complete. For now, please enjoy the blog where I may talk about bugs or challenges I have had to overcome, data which I find interesting, and anything unique to this project I would like to communicate! I may also refine or add to the data used in this investigation, so the below data in the blog may not be the final data I end up using in my analysis. Unfortunatley due to a change of username on GitHub (I much prefer my current username!) I messed up my repo, so I have lost a few commits, but I will continue to commit as I update my progress.
