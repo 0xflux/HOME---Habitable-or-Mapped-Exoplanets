@@ -45,7 +45,7 @@ def print_optimal_planets_for_life(exoplanets):
 			it has a possible temperature of: {round_it(t_df.loc[index,'equilibrium_temperature_K'] - 273.15, 3)} degrees celsius (3.s.f), 
 			the temperature of its star is {t_df.loc[index,'stellar_effective_temperature_black_body_radiation']} Kelvin, 
 			the radius of the star is: {t_df.loc[index,'stellar_radius']} km, 
-			the distance to the planet is {t_df.loc[index,'distance_to_system_in_light_years']}, 
+			the distance to the planet is {t_df.loc[index,'distance_to_system_in_light_years']} light years, 
 			the radius of the planet is {t_df.loc[index,'planet_actual_radius']} km,
 			the planet lives in the habitable zone of the star and is not a gas planet or an iron planet. Gravity has an acceleration of 
 			 {round_it(t_df.loc[index,'accelaration_to_gravity'], 3)} meters per second per second (3.s.f), which is {round_it(t_df.loc[index,'gravity_compared_to_earth'], 3)} (3.s.f) times that of Earth.""")
