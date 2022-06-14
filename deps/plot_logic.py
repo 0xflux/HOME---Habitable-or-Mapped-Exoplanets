@@ -5,6 +5,51 @@ import matplotlib.pyplot as plt
 
 from . import phys_and_math as pam
 
+def print_optimal_planets_for_life(exoplanets):
+	'''
+	A function to print the optimal planets for supprting life, based on: 
+		* Being in the habitable zone
+		* Having life supporting gravity
+
+	Also compile interesting information about those planets, that is the result of all the analysis done in my code.
+	'''
+	combined = {'name_of_planet': np.array(exoplanets['name_of_planet']), 
+		'orbital_period' : np.array(exoplanets['orbital_period']), 
+		'equilibrium_temperature_K' : np.array(exoplanets['equilibrium_temperature_K']), 
+		'stellar_effective_temperature_black_body_radiation' : np.array(exoplanets['stellar_effective_temperature_black_body_radiation']), 
+		'stellar_radius' : np.array(exoplanets['stellar_radius']), 
+		'distance_to_system_in_light_years' : np.array(exoplanets['distance_to_system_in_light_years']), 
+		'planet_actual_radius' : np.array(exoplanets['planet_actual_radius']), 
+		'planet_density' : np.array(exoplanets['planet_density']), 
+		'is_planet_gas_giant' : np.array(exoplanets['is_planet_gas_giant']), 
+		'is_planet_habitable' : np.array(exoplanets['is_planet_habitable']), 
+		'accelaration_to_gravity' : np.array(exoplanets['accelaration_to_gravity']), 
+		'gravity_compared_to_earth' : np.array(exoplanets['gravity_compared_to_earth'])}
+
+	# Now we have to pass some tests for selection..
+
+	# temp dataframe to remove nans - if there are nan values in the dataframe, remove the row as we need both x and y values to plot.
+	t_df = pd.DataFrame(combined)
+	#t_df.dropna(inplace = True) # 705 rows
+
+	t_df = t_df.loc[(t_df['is_planet_habitable'] == 1) & ((t_df['is_planet_gas_giant'] == 0)) & ((t_df['gravity_compared_to_earth'] <= 4))]
+
+	for index, row in t_df.iterrows():
+		# Manual data fix:
+		if t_df.loc[index,'name_of_planet'] == "TRAPPIST-1 e":
+			t_df.loc[index,'distance_to_system_in_light_years'] = 39 # Source: https://www.space.com/35796-trappist-1-alien-planets-travel-time.html
+
+		print(f"""Potentially habitable planet found! Planet name: {t_df.loc[index,'name_of_planet']}, it has an orbital period of:
+			{t_df.loc[index,'orbital_period']}, it has a possible temperature of: {t_df.loc[index,'equilibrium_temperature_K'] - 273.15} degrees 
+			celsius, the temperature of its star is {t_df.loc[index,'stellar_effective_temperature_black_body_radiation']} Kelvin, 
+			the radius of the star is: {t_df.loc[index,'stellar_radius']} km, the distance to the 
+			planet is {t_df.loc[index,'distance_to_system_in_light_years']}, the radius of the planet is {t_df.loc[index,'planet_actual_radius']},
+			 the planet lives in the habitable zone of the star and is not a gas planet or an iron planet. Gravity has an acceleration of 
+			 {t_df.loc[index,'accelaration_to_gravity']} meters per second per second, which is {t_df.loc[index,'gravity_compared_to_earth']}
+			  times that of Earth.""")
+			
+
+
 def scatter_plot_for_planet_mass_vs_solar_temp(df, savepath, graph_title):
 	'''
 	A function to plot planet mass vs the solar temperature, is there any correlation?
