@@ -41,7 +41,7 @@ def print_optimal_planets_for_life(exoplanets):
 			t_df.loc[index,'distance_to_system_in_light_years'] = 39 # Source: https://www.space.com/35796-trappist-1-alien-planets-travel-time.html
 
 		print(f"""Potentially habitable planet found! Planet name: {t_df.loc[index,'name_of_planet']}, it has an orbital period of:
-			{round_it(t_df.loc[index,'orbital_period'], 4)} days (4.s.f) (meaning it takes {round_it(t_df.loc[index,'orbital_period'], 4)} (4.s.f) many days to orbit its star), 
+			{round_it(t_df.loc[index,'orbital_period'], 2)} days (2.s.f) (meaning it takes {round_it(t_df.loc[index,'orbital_period'], 2)} (2.s.f) days to orbit its star), 
 			it has a possible temperature of: {round_it(t_df.loc[index,'equilibrium_temperature_K'] - 273.15, 3)} degrees celsius (3.s.f), 
 			the temperature of its star is {t_df.loc[index,'stellar_effective_temperature_black_body_radiation']} Kelvin, 
 			the radius of the star is: {t_df.loc[index,'stellar_radius']} km, 
