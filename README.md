@@ -15,7 +15,7 @@ As the project has grown far bigger than expected at this stage, I have split it
 The following is the output result of my program, which is a result of the input data! There is still a few tweaks I would like to make, however the first lot of results can be found as follows! This is very exciting, and it's amazing to think that results such as this could be the focus of major scientific discovery!
 
     Potentially habitable planet found! Planet name: K2-18 b, it has an orbital period of:
-			32.94 days (4.s.f) (meaning it takes 32.94 (4.s.f) many days to orbit its star), 
+			33 days (2.s.f) (meaning it takes 33 (2.s.f) many days to orbit its star), 
 			it has a possible temperature of: 10.9 degrees celsius (3.s.f), 
 			the temperature of its star is 3457.0 Kelvin, 
 			the radius of the star is: 285237.0 km, 
@@ -25,7 +25,7 @@ The following is the output result of my program, which is a result of the input
 			 15.6 meters per second per second (3.s.f), which is 1.59 (3.s.f) times that of Earth.
     
     Potentially habitable planet found! Planet name: TRAPPIST-1 e, it has an orbital period of:
-			6.1 days (4.s.f) (meaning it takes 6.1 (4.s.f) many days to orbit its star), 
+			6.1 days (2.s.f) (meaning it takes 6.1 (2.s.f) many days to orbit its star), 
 			it has a possible temperature of: -22.1 degrees celsius (3.s.f), 
 			the temperature of its star is 2559.0 Kelvin, 
 			the radius of the star is: 83484.0 km, 
