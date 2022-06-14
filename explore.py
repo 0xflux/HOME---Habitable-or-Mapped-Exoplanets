@@ -15,6 +15,19 @@ def main():
 	# https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PS, I have included a copy of the csv.
 
 	'''
+	A few fun things to consider in the future below! My project is now complete, in that i have taken 32 000 rows of data and 
+	selected planets for scientific focus which would / could support life. As this is a hobby project and I cannot sink a million 
+	hours into it, there are a few things that I would like to tweak.
+
+	The main thing I would like to tweak to make the results more accurate, is checking lost data in the cleansing phase, at the moment
+	I am selecting the data which has the least missing values, but really I need to iterate over each duplicate planet, and check if data
+	missing from any cells is present in any of the subsequent rows. Then add that data to the row I'm going to keep. If this project were
+	to be used in actual scientific research, that would be a must, however as this is a hobby project, I will focus on that as my next goal!
+
+	Hopefully when I am back from my short holiday I can look to implement that fix!
+
+	A nice to do list that is not 'mission critical' to the purposes of my project:
+
 		* Graph out the black body spectrum of a system's star - from the black body work out its temperature
 		# Histograms:
 			* Histogram distance to exo from earth vs number of exo
@@ -23,7 +36,6 @@ def main():
 			* Histogram eccentricity
 		# Scatter for mass vs luminosity vs distance of orbit
 		# Balance gaps - is there data missing which is in another row that has been discounted?
-		# Do some stats on the habitable planets
 		# Can i look at any spectra re the planets?
 		# Look at solar data
 		# Scrape web / other resources to find additional data such as mass, radius for a more complete dataset.
