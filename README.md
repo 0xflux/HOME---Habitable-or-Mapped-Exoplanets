@@ -102,9 +102,3 @@ What is really interesting about this data is that just because a planet is in t
 * Be in the habitable zone,
 * Have a gravity consistant with life (as we know it), and
 * Not be a gaseous planet
-
-There are a few other factors I would like to look at, including:
-
-* Can the mass support an atmosphere.
-
-Then, I can finally draw conclusions from my data!
