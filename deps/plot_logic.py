@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 import matplotlib.pyplot as plt
+from math import log10 , floor
 
 from . import phys_and_math as pam
 
@@ -40,13 +41,14 @@ def print_optimal_planets_for_life(exoplanets):
 			t_df.loc[index,'distance_to_system_in_light_years'] = 39 # Source: https://www.space.com/35796-trappist-1-alien-planets-travel-time.html
 
 		print(f"""Potentially habitable planet found! Planet name: {t_df.loc[index,'name_of_planet']}, it has an orbital period of:
-			{t_df.loc[index,'orbital_period']}, it has a possible temperature of: {t_df.loc[index,'equilibrium_temperature_K'] - 273.15} degrees 
-			celsius, the temperature of its star is {t_df.loc[index,'stellar_effective_temperature_black_body_radiation']} Kelvin, 
-			the radius of the star is: {t_df.loc[index,'stellar_radius']} km, the distance to the 
-			planet is {t_df.loc[index,'distance_to_system_in_light_years']}, the radius of the planet is {t_df.loc[index,'planet_actual_radius']},
-			 the planet lives in the habitable zone of the star and is not a gas planet or an iron planet. Gravity has an acceleration of 
-			 {t_df.loc[index,'accelaration_to_gravity']} meters per second per second, which is {t_df.loc[index,'gravity_compared_to_earth']}
-			  times that of Earth.""")
+			{round_it(t_df.loc[index,'orbital_period'], 4)} days (4.s.f) (meaning it takes {round_it(t_df.loc[index,'orbital_period'], 4)} (4.s.f) many days to orbit its star), 
+			it has a possible temperature of: {round_it(t_df.loc[index,'equilibrium_temperature_K'] - 273.15, 3)} degrees celsius (3.s.f), 
+			the temperature of its star is {t_df.loc[index,'stellar_effective_temperature_black_body_radiation']} Kelvin, 
+			the radius of the star is: {t_df.loc[index,'stellar_radius']} km, 
+			the distance to the planet is {t_df.loc[index,'distance_to_system_in_light_years']}, 
+			the radius of the planet is {t_df.loc[index,'planet_actual_radius']} km,
+			the planet lives in the habitable zone of the star and is not a gas planet or an iron planet. Gravity has an acceleration of 
+			 {round_it(t_df.loc[index,'accelaration_to_gravity'], 3)} meters per second per second (3.s.f), which is {round_it(t_df.loc[index,'gravity_compared_to_earth'], 3)} (3.s.f) times that of Earth.""")
 			
 
 
@@ -379,4 +381,12 @@ def graph_gravity(exo, hab, savepathall, savepathhab):
 	plt.pie(arr, labels = key)
 
 	plt.savefig("./output/g_force_all_exoplanets_habitable_pie_chart.png")
+
+
+def round_it(x, sig):
+	'''
+	I have taken this code from https://www.delftstack.com/howto/python/round-to-significant-digits-python/
+	thank you for providing this function!
+	'''
+	return round(x, sig-int(floor(log10(abs(x))))-1)
 
