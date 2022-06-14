@@ -19,7 +19,7 @@ The following is the output result of my program, which is a result of the input
 			it has a possible temperature of: 10.9 degrees celsius (3.s.f), 
 			the temperature of its star is 3457.0 Kelvin, 
 			the radius of the star is: 285237.0 km, 
-			the distance to the planet is 124.0261811215556, 
+			the distance to the planet is 124.0261811215556 light years, 
 			the radius of the planet is 15099.27 km,
 			the planet lives in the habitable zone of the star and is not a gas planet or an iron planet. Gravity has an acceleration of 
 			 15.6 meters per second per second (3.s.f), which is 1.59 (3.s.f) times that of Earth.
@@ -29,7 +29,7 @@ The following is the output result of my program, which is a result of the input
 			it has a possible temperature of: -22.1 degrees celsius (3.s.f), 
 			the temperature of its star is 2559.0 Kelvin, 
 			the radius of the star is: 83484.0 km, 
-			the distance to the planet is 39.0, 
+			the distance to the planet is 39.0 light years, 
 			the radius of the planet is 5848.578 km,
 			the planet lives in the habitable zone of the star and is not a gas planet or an iron planet. Gravity has an acceleration of 
 			 7.22 meters per second per second (3.s.f), which is 0.736 (3.s.f) times that of Earth.
