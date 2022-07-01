@@ -227,7 +227,6 @@ def clean_data_exoplanets(df, len_of_list):
 	exoplanets['planet_density'] = np.nan
 	exoplanets['is_planet_gas_giant'] = np.nan
 
-
 	merge_data_rows(exoplanets)
 
 
@@ -320,13 +319,19 @@ def merge_data_rows(exoplanets):
 
 	'''
 
+	print('Removing duplicates and condensing any missing data from duplicate rows into one single row...')
+
 	# sort the dataframe alphabetically by planet name.
 	exoplanets.sort_values('name_of_planet')
 
 	# properties for the new dataframe
 	len_of_df = len(exoplanets.index)
-	index_of_t_df = 0
+
+	index_of_t_df = -1 # start counter from -1 so we dont need a flag system - the actual used value will never be -1 as its incremented
+
 	t_df = pd.DataFrame(columns = exoplanets.columns)
+
+	exoplanets.to_excel("beforeOps.xlsx")
 
 	# create a list of planet names to establish if we are on a new planet, or the same on
 	list_of_planets_processed = []
@@ -344,27 +349,43 @@ def merge_data_rows(exoplanets):
 				# check if planet name is in list, if not it is a fresh insert,
 				# if it is in the list then we need to check what rows we need to fill!
 				if name_of_current_planet not in list_of_planets_processed:
+
+					index_of_t_df += 1 # do this first, as it starts from -1
+
 					list_of_planets_processed.append(name_of_current_planet) # add to the list
 					t_df.loc[index_of_t_df] = exoplanets.loc[index] # add the row to the temp database
+
+					# use index = zero as a test case
 					if index == 0:
 						# create a list for the missing values that we want to search for in the subsequent rows
-						print(f"stuff missing: {exoplanets.iloc[index].isnull()}")
+						missing_data_dict = create_dict_of_missing_values_from_row(exoplanets, index)
+						print(f"stuff missing: {missing_data_dict}")
 				else:
-
+					# Search through the row for any missing values and insert into the row at t_df
 					pass
 
 			else:
 				# this will include the rows where there is only 1 row of data for an exoplanet
+				index_of_t_df += 1 # do this first, as it starts from -1
 				t_df.loc[index_of_t_df] = exoplanets.loc[index]
 
-			index_of_t_df += 1
 
-
-	#t_df.to_excel("tdf.xlsx")
+	t_df.to_excel("tdf.xlsx")
 
 	sys.exit("Stop")
 
 	return t_df
+
+
+def create_dict_of_missing_values_from_row(exoplanets, index):
+	''' 
+	Create a dictionary of missing / nan values from the row that we need to search for in any duplicate data sets
+
+	Returns a dict
+	'''
+	missing_data_list = exoplanets.iloc[index].isnull().tolist() # iterate through row and ret true or false for if nan
+	missing_data_dict = dict(zip(exoplanets.columns, missing_data_list)) # convert the list of bools to a dict
+	return {k: v for k, v in missing_data_dict.items() if v == True} # filter only by true - i.e. the missing ones
 
 
 def remove_nans_from_df(df):
