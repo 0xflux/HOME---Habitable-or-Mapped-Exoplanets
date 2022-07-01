@@ -226,54 +226,9 @@ def clean_data_exoplanets(df, len_of_list):
 	exoplanets['planet_density'] = np.nan
 	exoplanets['is_planet_gas_giant'] = np.nan
 
-	# Convert parsecs to light years
-	# Convert planet_mass_compared_to_earth to actual mass (kg)
-	# Also insert the null count and add that to the row
-
-	parsec_to_ly = 3.261563776976 # 1 parsec to 13.s.f.
 
 	for index, row in exoplanets.iterrows():
-
-		# parsec to ly conversion to 13.s.f. Can quote to 3 s.f. in any display data.
-		exoplanets.loc[index,'distance_to_system_in_light_years'] = row['distance_to_system_in_light_years'] * parsec_to_ly
-		exoplanets.loc[index,'distance_to_system_in_light_years_error_max'] = row['distance_to_system_in_light_years_error_max'] * parsec_to_ly
-		exoplanets.loc[index,'distance_to_system_in_light_years_error_min'] = row['distance_to_system_in_light_years_error_min'] * parsec_to_ly
-
-		# calculate planet mass
-		# earth is 5.972e24 kg so we need to multiply the planet_mass_compared_to_earth vs earths mass.
-		exoplanets.loc[index,'planet_mass_in_kg'] = row['planet_mass_compared_to_earth'] * 5.972e24
-		
-		# Add a col to count nuls
-		exoplanets.loc[index,'null_counter'] = null_list[index]
-
-		# Calculate actual radius of star
-		stars_rad = pam.compute_radius_of_star(row['stellar_radius'])
-		exoplanets.loc[index,'stellar_radius'] = stars_rad # TODO put this in the function 
-
-		# compute and write the habitability zones
-		pam.compute_habitability_zone_and_luminosity(exoplanets, index, exoplanets.loc[index, 'stellar_radius'], 
-			exoplanets.loc[index, 'stellar_effective_temperature_black_body_radiation'])
-
-		# flag for habitability 
-		does_planet_live_within_its_habitability_zone(exoplanets, index, exoplanets.loc[index, 'habitability_zone_inner'], 
-			exoplanets.loc[index, 'habitability_zone_outer'], exoplanets.loc[index, 'orbital_period_widest_radius_in_AU'])
-
-		# calculate the accelaration due to gravity on the planet:
-		pam.calculate_gravity_and_planet_radius(exoplanets, index, exoplanets.loc[index, 'planet_mass_in_kg'], row['planet_radius_compared_to_earth'])
-
-		# calculate density in kg m^-3
-		density = pam.compute_density_of_planet(exoplanets.loc[index, 'planet_mass_in_kg'], exoplanets.loc[index, 'planet_radius_compared_to_earth'])
-		exoplanets.loc[index,'planet_density'] = density
-
-		# calc chances of planet being a gas giant based off of this source:
-		# source: https://www.open.edu/openlearn/mod/oucontent/view.php?id=66947&extra=thumbnailfigure_idm491
-		if density < 3000:
-			exoplanets.loc[index,'is_planet_gas_giant'] = 1 # if above 3000 kg m^-3, it is likely gas
-		if density > 3000:
-			exoplanets.loc[index,'is_planet_gas_giant'] = 0 # if above 3000 kg m^-3, it is likely rocky
-		if density > 7900:
-			exoplanets.loc[index,'is_planet_gas_giant'] = 2 # if above 3000 kg m^-3, it is likely iron
-
+		compute_data_each_row_of_exoplanet_df(index, row, exoplanets, null_list)
 
 
 	# Sort exoplanets by distance from our solar system AND sort by the least NaNs
@@ -302,6 +257,49 @@ def does_planet_live_within_its_habitability_zone(df, index, hab_inner, hab_oute
 		df.loc[index,'is_planet_habitable'] = 1 # add the value
 
 
+
+def compute_data_each_row_of_exoplanet_df(index, row, exoplanets, null_list):
+	parsec_to_ly = 3.261563776976 # 1 parsec to 13.s.f.
+
+	# parsec to ly conversion to 13.s.f. Can quote to 3 s.f. in any display data.
+	exoplanets.loc[index,'distance_to_system_in_light_years'] = row['distance_to_system_in_light_years'] * parsec_to_ly
+	exoplanets.loc[index,'distance_to_system_in_light_years_error_max'] = row['distance_to_system_in_light_years_error_max'] * parsec_to_ly
+	exoplanets.loc[index,'distance_to_system_in_light_years_error_min'] = row['distance_to_system_in_light_years_error_min'] * parsec_to_ly
+
+	# calculate planet mass
+	# earth is 5.972e24 kg so we need to multiply the planet_mass_compared_to_earth vs earths mass.
+	exoplanets.loc[index,'planet_mass_in_kg'] = row['planet_mass_compared_to_earth'] * 5.972e24
+	
+	# Add a col to count nuls
+	exoplanets.loc[index,'null_counter'] = null_list[index]
+
+	# Calculate actual radius of star
+	stars_rad = pam.compute_radius_of_star(row['stellar_radius'])
+	exoplanets.loc[index,'stellar_radius'] = stars_rad # TODO put this in the function 
+
+	# compute and write the habitability zones
+	pam.compute_habitability_zone_and_luminosity(exoplanets, index, exoplanets.loc[index, 'stellar_radius'], 
+		exoplanets.loc[index, 'stellar_effective_temperature_black_body_radiation'])
+
+	# flag for habitability 
+	does_planet_live_within_its_habitability_zone(exoplanets, index, exoplanets.loc[index, 'habitability_zone_inner'], 
+		exoplanets.loc[index, 'habitability_zone_outer'], exoplanets.loc[index, 'orbital_period_widest_radius_in_AU'])
+
+	# calculate the accelaration due to gravity on the planet:
+	pam.calculate_gravity_and_planet_radius(exoplanets, index, exoplanets.loc[index, 'planet_mass_in_kg'], row['planet_radius_compared_to_earth'])
+
+	# calculate density in kg m^-3
+	density = pam.compute_density_of_planet(exoplanets.loc[index, 'planet_mass_in_kg'], exoplanets.loc[index, 'planet_radius_compared_to_earth'])
+	exoplanets.loc[index,'planet_density'] = density
+
+	# calc chances of planet being a gas giant based off of this source:
+	# source: https://www.open.edu/openlearn/mod/oucontent/view.php?id=66947&extra=thumbnailfigure_idm491
+	if density < 3000:
+		exoplanets.loc[index,'is_planet_gas_giant'] = 1 # if above 3000 kg m^-3, it is likely gas
+	if density > 3000:
+		exoplanets.loc[index,'is_planet_gas_giant'] = 0 # if above 3000 kg m^-3, it is likely rocky
+	if density > 7900:
+		exoplanets.loc[index,'is_planet_gas_giant'] = 2 # if above 3000 kg m^-3, it is likely iron
 
 
 def remove_nans_from_df(df):
