@@ -364,11 +364,12 @@ def merge_data_rows(exoplanets):
 					t_df.loc[index_of_t_df] = exoplanets.loc[index] # add the row to the temp database
 
 					# create a list for the missing values that we want to search for in the subsequent rows in the below else
-					missing_data_dict = create_dict_of_missing_values_from_row(exoplanets, index)
+					missing_data_list = create_dict_of_missing_values_from_row(exoplanets, index)
 
 				else:
 					# Search through the row for any missing values and insert into the row at t_df
-					list_of_missing_values = list(missing_data_dict.keys())
+					if index == 1:
+						print(f'Missing data list: {missing_data_list}')
 
 
 			# if name of current planet isnt something being iterated over, then it is not a duplicate and needs inserting
@@ -394,7 +395,7 @@ def create_dict_of_missing_values_from_row(exoplanets, index):
 	missing_data_list = exoplanets.iloc[index].isnull().tolist() # iterate through row and ret true or false for if nan
 	missing_data_dict = dict(zip(exoplanets.columns, missing_data_list)) # convert the list of bools to a dict
 	missing_data_dict = {k: v for k, v in missing_data_dict.items() if v == True} # filter only by true - i.e. the missing ones
-	return list(missing_data_dict.keys) # return list of keys (i.e. column names)
+	return list(missing_data_dict.keys()) # return list of keys (i.e. column names)
 
 
 def remove_nans_from_df(df):
