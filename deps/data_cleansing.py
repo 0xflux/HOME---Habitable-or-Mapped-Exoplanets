@@ -336,6 +336,9 @@ def merge_data_rows(exoplanets):
 	# create a list of planet names to establish if we are on a new planet, or the same on
 	list_of_planets_processed = []
 
+	# variable to store the name of the planet being iterated over where it is a duplicate
+	name_of_planet_iterating = ""
+
 	# start the iteration
 	for index, row in exoplanets.iterrows():
 
@@ -346,25 +349,29 @@ def merge_data_rows(exoplanets):
 			# Check if the next planet in the nexr row is a match of the current planet being iterated over
 			if name_of_current_planet == exoplanets.loc[index + 1,'name_of_planet']:
 
+				# set the name of planet being iterated over which is duplicated in the raw data
+				name_of_planet_iterating = name_of_current_planet
+
 				# check if planet name is in list, if not it is a fresh insert,
 				# if it is in the list then we need to check what rows we need to fill!
 				if name_of_current_planet not in list_of_planets_processed:
+
+					#print(f"Name of current planet: {name_of_current_planet}, list: {list_of_planets_processed}")
 
 					index_of_t_df += 1 # do this first, as it starts from -1
 
 					list_of_planets_processed.append(name_of_current_planet) # add to the list
 					t_df.loc[index_of_t_df] = exoplanets.loc[index] # add the row to the temp database
 
-					# use index = zero as a test case
-					if index == 0:
-						# create a list for the missing values that we want to search for in the subsequent rows
-						missing_data_dict = create_dict_of_missing_values_from_row(exoplanets, index)
-						print(f"stuff missing: {missing_data_dict}")
+					# create a list for the missing values that we want to search for in the subsequent rows in the below else
+					missing_data_dict = create_dict_of_missing_values_from_row(exoplanets, index)
+
 				else:
 					# Search through the row for any missing values and insert into the row at t_df
 					pass
 
-			else:
+			# if name of current planet isnt something being iterated over, then it is not a duplicate and needs inserting
+			if name_of_current_planet != name_of_planet_iterating:
 				# this will include the rows where there is only 1 row of data for an exoplanet
 				index_of_t_df += 1 # do this first, as it starts from -1
 				t_df.loc[index_of_t_df] = exoplanets.loc[index]
