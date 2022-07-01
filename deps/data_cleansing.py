@@ -368,7 +368,8 @@ def merge_data_rows(exoplanets):
 
 				else:
 					# Search through the row for any missing values and insert into the row at t_df
-					pass
+					list_of_missing_values = list(missing_data_dict.keys())
+
 
 			# if name of current planet isnt something being iterated over, then it is not a duplicate and needs inserting
 			if name_of_current_planet != name_of_planet_iterating:
@@ -388,11 +389,12 @@ def create_dict_of_missing_values_from_row(exoplanets, index):
 	''' 
 	Create a dictionary of missing / nan values from the row that we need to search for in any duplicate data sets
 
-	Returns a dict
+	Returns a list
 	'''
 	missing_data_list = exoplanets.iloc[index].isnull().tolist() # iterate through row and ret true or false for if nan
 	missing_data_dict = dict(zip(exoplanets.columns, missing_data_list)) # convert the list of bools to a dict
-	return {k: v for k, v in missing_data_dict.items() if v == True} # filter only by true - i.e. the missing ones
+	missing_data_dict = {k: v for k, v in missing_data_dict.items() if v == True} # filter only by true - i.e. the missing ones
+	return list(missing_data_dict.keys) # return list of keys (i.e. column names)
 
 
 def remove_nans_from_df(df):
