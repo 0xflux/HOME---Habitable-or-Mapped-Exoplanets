@@ -331,7 +331,7 @@ def merge_data_rows(exoplanets):
 
 	t_df = pd.DataFrame(columns = exoplanets.columns)
 
-	exoplanets.to_excel("beforeOps.xlsx")
+	#exoplanets.to_excel("beforeOps.xlsx")
 
 	# create a list of planet names to establish if we are on a new planet, or the same on
 	list_of_planets_processed = []
@@ -346,8 +346,8 @@ def merge_data_rows(exoplanets):
 
 		# ensure we don't go out of bounds
 		if index < len_of_df - 1:
-			# Check if the next planet in the nexr row is a match of the current planet being iterated over
-			if name_of_current_planet == exoplanets.loc[index + 1,'name_of_planet']:
+			# Check if the planet in the next or previous row is a match of the planet being iterated over
+			if name_of_current_planet == exoplanets.loc[index + 1,'name_of_planet'] or name_of_current_planet == exoplanets.loc[index - 1,'name_of_planet']:
 
 				# set the name of planet being iterated over which is duplicated in the raw data
 				name_of_planet_iterating = name_of_current_planet
@@ -356,20 +356,17 @@ def merge_data_rows(exoplanets):
 				# if it is in the list then we need to check what rows we need to fill!
 				if name_of_current_planet not in list_of_planets_processed:
 
-					#print(f"Name of current planet: {name_of_current_planet}, list: {list_of_planets_processed}")
+					# create a list for the missing values that we want to search for in the subsequent rows in the below else
+					missing_data_list = create_dict_of_missing_values_from_row(exoplanets, index)
 
 					index_of_t_df += 1 # do this first, as it starts from -1
 
 					list_of_planets_processed.append(name_of_current_planet) # add to the list
 					t_df.loc[index_of_t_df] = exoplanets.loc[index] # add the row to the temp database
 
-					# create a list for the missing values that we want to search for in the subsequent rows in the below else
-					missing_data_list = create_dict_of_missing_values_from_row(exoplanets, index)
-
 				else:
 					# Search through the row for any missing values and insert into the row at t_df
-					if index == 1:
-						print(f'Missing data list: {missing_data_list}')
+					pass
 
 
 			# if name of current planet isnt something being iterated over, then it is not a duplicate and needs inserting
@@ -379,7 +376,7 @@ def merge_data_rows(exoplanets):
 				t_df.loc[index_of_t_df] = exoplanets.loc[index]
 
 
-	t_df.to_excel("tdf.xlsx")
+	#t_df.to_excel("tdf.xlsx")
 
 	sys.exit("Stop")
 
