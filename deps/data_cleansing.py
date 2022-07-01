@@ -319,7 +319,7 @@ def merge_data_rows(exoplanets):
 
 	'''
 
-	print('Removing duplicates and condensing any missing data from duplicate rows into one single row...')
+	print('Info - Removing duplicates and condensing any missing data from duplicate rows into one single row...')
 
 	# sort the dataframe alphabetically by planet name.
 	exoplanets.sort_values('name_of_planet')
@@ -356,17 +356,22 @@ def merge_data_rows(exoplanets):
 				# if it is in the list then we need to check what rows we need to fill!
 				if name_of_current_planet not in list_of_planets_processed:
 
-					# create a list for the missing values that we want to search for in the subsequent rows in the below else
-					missing_data_list = create_dict_of_missing_values_from_row(exoplanets, index)
-
 					index_of_t_df += 1 # do this first, as it starts from -1
 
 					list_of_planets_processed.append(name_of_current_planet) # add to the list
 					t_df.loc[index_of_t_df] = exoplanets.loc[index] # add the row to the temp database
 
+					# create a list for the missing values that we want to search for in the subsequent rows in the below else
+					missing_data_list = create_dict_of_missing_values_from_row(exoplanets, index)
+
 				else:
 					# Search through the row for any missing values and insert into the row at t_df
-					pass
+
+					# Iterate through the missing data for the current row, if the data exists then insert into the temp df that gets returned
+					for col in missing_data_list:
+						if pd.notnull(exoplanets.loc[index, col]):
+							#print(f"Current data in row {index}, {col}: {pd.notnull(exoplanets.loc[index, col])}")
+							t_df.loc[index_of_t_df, col] = exoplanets.loc[index, col]
 
 
 			# if name of current planet isnt something being iterated over, then it is not a duplicate and needs inserting
@@ -376,11 +381,9 @@ def merge_data_rows(exoplanets):
 				t_df.loc[index_of_t_df] = exoplanets.loc[index]
 
 
-	#t_df.to_excel("tdf.xlsx")
+	t_df.to_excel("tdf.xlsx")
 
-	sys.exit("Stop")
-
-	return t_df
+	#return t_df
 
 
 def create_dict_of_missing_values_from_row(exoplanets, index):
