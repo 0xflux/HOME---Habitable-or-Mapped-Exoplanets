@@ -43,7 +43,7 @@ Any major changes I'll probably do as a branch and pr, so don't forget to check 
 
 ### Update July 2022:
 
-In the latest update, I have refactored my code to condense the duplicate rows in a much better style. Previously the way I removed duplicates was to drop duplicate rows and only keep the first - the problem this created however was that if row 1 was missing data duplicate rows 2, 3 and 4 contained, the final dataframe would be missing data which could potentially mean habitable exoplanets were not being found by my program!
+In the latest update (mainly the first few methods in in the file `deps/data_cleansing.py`), I have refactored my code to condense the duplicate rows in a much better style. Previously the way I removed duplicates was to drop duplicate rows and only keep the first - the problem this created however was that if row 1 was missing data duplicate rows 2, 3 and 4 contained, the final dataframe would be missing data which could potentially mean habitable exoplanets were not being found by my program!
 
 To combat this, I first create a temp dataframe and iterate through the input data identifying where the gaps are per set of duplicates. If any of the subsequent duplicate rows contain data that are missing in the first row, then it adds these values into the temp dataframe which only has one planet per row. I'm quite proud of my code and the results.
 
