@@ -16,15 +16,7 @@ def main():
 
 	'''
 	A few fun things to consider in the future below! My project is now complete, in that i have taken 32 000 rows of data and 
-	selected planets for scientific focus which would / could support life. As this is a hobby project and I cannot sink a million 
-	hours into it, there are a few things that I would like to tweak.
-
-	The main thing I would like to tweak to make the results more accurate, is checking lost data in the cleansing phase, at the moment
-	I am selecting the data which has the least missing values, but really I need to iterate over each duplicate planet, and check if data
-	missing from any cells is present in any of the subsequent rows. Then add that data to the row I'm going to keep. If this project were
-	to be used in actual scientific research, that would be a must, however as this is a hobby project, I will focus on that as my next goal!
-
-	Hopefully when I am back from my short holiday I can look to implement that fix!
+	selected planets for scientific focus which would / could support life.
 
 	A nice to do list that is not 'mission critical' to the purposes of my project:
 
@@ -39,7 +31,7 @@ def main():
 		# Can i look at any spectra re the planets?
 		# Look at solar data
 		# Scrape web / other resources to find additional data such as mass, radius for a more complete dataset.
-		# it would be interesting to see if planets are iron / rocky close to the star, and the further out do they go to gas giants?
+		# It would be interesting to see if planets are iron / rocky close to the star, and the further out do they go to gas giants?
 
 	'''
 
@@ -59,7 +51,7 @@ def main():
 		exoplanets = pd.read_excel(CLEAN_DATA_FILE_PATH)
 	
 	else:
-		print("Importing un-sanitised data.. This could take a while")
+		print("Importing un-sanitised data.. This could take a while depending on the size of the input data.")
 
 		# first create data frame with CSV in, ~ 30 000 rows.
 		master_data = pd.read_excel(INPUT_DATA_PATH)
