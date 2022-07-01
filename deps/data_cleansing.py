@@ -227,6 +227,9 @@ def clean_data_exoplanets(df, len_of_list):
 	exoplanets['is_planet_gas_giant'] = np.nan
 
 
+	merge_data_rows(exoplanets)
+
+
 	for index, row in exoplanets.iterrows():
 		compute_data_each_row_of_exoplanet_df(index, row, exoplanets, null_list)
 
@@ -300,6 +303,31 @@ def compute_data_each_row_of_exoplanet_df(index, row, exoplanets, null_list):
 		exoplanets.loc[index,'is_planet_gas_giant'] = 0 # if above 3000 kg m^-3, it is likely rocky
 	if density > 7900:
 		exoplanets.loc[index,'is_planet_gas_giant'] = 2 # if above 3000 kg m^-3, it is likely iron
+
+
+def merge_data_rows(exoplanets):
+	'''
+	A method to merge data rows as there is a problem at the moment where some data nmay be missed because of empty rows
+	The idea of this method is to consolidate missing values where data exists over multiple rows into one single row as a new
+	dataframe.
+
+	Takes in the exoplanet dataframe
+	Returns another dataframe which sould be more complete than the first.
+
+	By sorting the data alphabetically via planet name, it creates a faster search method for finding if that planet name exists elsewhere
+	in the data.
+
+	'''
+
+	# sort the dataframe alphabetically by planet name.
+	exoplanets.sort_values('name_of_planet')
+
+	t_df = pd.DataFrame()
+
+	# start the iteration
+	for index, row in exoplanets.iterrows():
+		name_of_current_planet = exoplanets.loc[index,'name_of_planet']
+		print(name_of_current_planet)
 
 
 def remove_nans_from_df(df):
