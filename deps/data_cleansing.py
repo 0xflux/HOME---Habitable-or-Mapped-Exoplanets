@@ -4,6 +4,7 @@ from pathlib import Path
 import requests
 import re
 from bs4 import BeautifulSoup
+import sys
 
 from . import phys_and_math as pam
 
@@ -322,12 +323,48 @@ def merge_data_rows(exoplanets):
 	# sort the dataframe alphabetically by planet name.
 	exoplanets.sort_values('name_of_planet')
 
-	t_df = pd.DataFrame()
+	# properties for the new dataframe
+	len_of_df = len(exoplanets.index)
+	index_of_t_df = 0
+	t_df = pd.DataFrame(columns = exoplanets.columns)
+
+	# create a list of planet names to establish if we are on a new planet, or the same on
+	list_of_planets_processed = []
 
 	# start the iteration
 	for index, row in exoplanets.iterrows():
+
 		name_of_current_planet = exoplanets.loc[index,'name_of_planet']
-		print(name_of_current_planet)
+
+		# ensure we don't go out of bounds
+		if index < len_of_df - 1:
+			# Check if the next planet in the nexr row is a match of the current planet being iterated over
+			if name_of_current_planet == exoplanets.loc[index + 1,'name_of_planet']:
+
+				# check if planet name is in list, if not it is a fresh insert,
+				# if it is in the list then we need to check what rows we need to fill!
+				if name_of_current_planet not in list_of_planets_processed:
+					list_of_planets_processed.append(name_of_current_planet) # add to the list
+					t_df.loc[index_of_t_df] = exoplanets.loc[index] # add the row to the temp database
+					if index == 0:
+						# create a list for the missing values that we want to search for in the subsequent rows
+						print(f"stuff missing: {exoplanets.iloc[index].isnull()}")
+				else:
+
+					pass
+
+			else:
+				# this will include the rows where there is only 1 row of data for an exoplanet
+				t_df.loc[index_of_t_df] = exoplanets.loc[index]
+
+			index_of_t_df += 1
+
+
+	#t_df.to_excel("tdf.xlsx")
+
+	sys.exit("Stop")
+
+	return t_df
 
 
 def remove_nans_from_df(df):

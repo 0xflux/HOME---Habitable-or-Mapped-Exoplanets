@@ -59,7 +59,7 @@ def main():
 		exoplanets = pd.read_excel(CLEAN_DATA_FILE_PATH)
 	
 	else:
-		print("Importing un-sanitised data.. This could take a while")
+		print("Importing un-sanitised data.. This could take a while depending on the size of the input data.")
 
 		# first create data frame with CSV in, ~ 30 000 rows.
 		master_data = pd.read_excel(INPUT_DATA_PATH)
