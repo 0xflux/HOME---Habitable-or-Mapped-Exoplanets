@@ -37,29 +37,64 @@ The following is the output result of my program, which is a result of the input
 
 ## Blog!
 
-The below is a blog written by me, documenting my progress and a way for me to express what I am doing as I do it. It is intended to show my workflow periodically. I will provide a more well rounded writeup of my results when the project is complete. For now, please enjoy the blog where I may talk about bugs or challenges I have had to overcome, data which I find interesting, and anything unique to this project I would like to communicate! I may also refine or add to the data used in this investigation, so the below data in the blog may not be the final data I end up using in my analysis. Unfortunatley due to a change of username on GitHub (I much prefer my current username!) I messed up my repo, so I have lost a few commits, but I will continue to commit as I update my progress.
+The below is a blog written by me, documenting my progress and a way for me to express what I am doing as I do it. It is intended to show my workflow periodically. I will provide a more well rounded writeup of my results when the project is complete. For now, please enjoy the blog where I may talk about bugs or challenges I have had to overcome, data which I find interesting, and anything unique to this project I would like to communicate! I may also refine or add to the data used in this investigation, so the below data in the blog may not be the final data I end up using in my analysis.
 
 Any major changes I'll probably do as a branch and pr, so don't forget to check live branches!
+
+### Update July 2022:
+
+In the latest update, I have refactored my code to condense the duplicate rows in a much better style. Previously the way I removed duplicates was to drop duplicate rows and only keep the first - the problem this created however was that if row 1 was missing data duplicate rows 2, 3 and 4 contained, the final dataframe would be missing data which could potentially mean habitable exoplanets were not being found by my program!
+
+To combat this, I first create a temp dataframe and iterate through the input data identifying where the gaps are per set of duplicates. If any of the subsequent duplicate rows contain data that are missing in the first row, then it adds these values into the temp dataframe which only has one planet per row. I'm quite proud of my code and the results.
+
+From analysing the results from this refactored code, more exoplanets can be manipulated! So it has been worthwhile! For example, here is the difference on a histogram (left is the old version, right is the new version) because the program is able to manipulate more data!
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/49762827/176934028-e7e05855-4aec-4368-a585-a2c766850a46.png">
+
+You can quite clearly see there was a fair amount of data missing because of the old way I was removing duplicate values!
+
+The differences between old graphs (left) and new graphs (right) are presented below in no particular order - this is the most up to date data that the program now uses! And on the first image, you can see what a huge difference it has made as one planet has a huge density of approximately 7.5 x 10^6 kg m^3 (2.s.f), but in the old data the largest value for density was approximately 4.1 x 10^6 kg m^3 (2.s.f)! That is (nearly) double!! And what is more impressive, is the planet has a low mass for its density! This is a good example of how using python in science or in data analysis can easily help triage specific things or anomalies to research!
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/49762827/176934422-87461b59-b976-4b74-8916-e55dadb62f02.png">
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/49762827/176934940-e746c767-49d5-4a58-aec8-cb98fa9ad3ab.png">
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/49762827/176934964-f3a143bd-8dc9-41c4-a9ee-dadfd2376945.png">
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/49762827/176935041-e0d9b43b-3182-4438-866e-4ec426919c69.png">
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/49762827/176935063-fe7169ca-c959-40c6-999f-558edb3690b3.png">
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/49762827/176935102-e27bcd16-e5d9-4dce-8fb9-8a297e134b2d.png">
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/49762827/176935130-c791203f-ec46-4b8a-bb09-b758c28c7d1e.png">
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/49762827/176935183-499014b8-f94e-4d56-8206-e2eb46117d36.png">
+
+<img width="947" alt="image" src="https://user-images.githubusercontent.com/49762827/176935237-d80c4440-5d9d-4580-a7f7-2e3115abe251.png">
+
+
+## Old blog updates running oldest to newest:
 
 ### Scatter graph of the mass of exoplanets plotted against the temperature of their host star:
 
 <img width="626" alt="image" src="https://user-images.githubusercontent.com/49762827/172062620-8a625d88-6952-4e3d-a7d7-565a883c5b1e.png">
 
-Most planets discovered are relativley low mass (to be expected), orbiting low temperature stars. There are a few exceptions to this, and it will be interesting to explore data in relation to them. My hypothesis would be that these larger planets would be gas giants, however I will examine the data to see whether this is correct.
+Most planets discovered are relatively low mass (to be expected), orbiting low temperature stars. There are a few exceptions to this, and it will be interesting to explore data in relation to them. My hypothesis would be that these larger planets would be gas giants, however I will examine the data to see whether this is correct.
 
-This was particually interesting to write, as I have had to use multiple conversions and equations to calcualte the luminosity of the star, and then convert it to a relative luminosity, as well as working with AU as a measurement of distance. I plan on building a module which will look at the orbit of the exoplanet, and see whether it fits into the habitable zone of the star it orbits. I have also manually reviewed data and calculations to ensure the math is correct.
+This was particularly interesting to write, as I have had to use multiple conversions and equations to calculate the luminosity of the star, and then convert it to a relative luminosity, as well as working with AU as a measurement of distance. I plan on building a module which will look at the orbit of the exoplanet, and see whether it fits into the habitable zone of the star it orbits. I have also manually reviewed data and calculations to ensure the math is correct.
 
 ### Significant progress - Calculate luminosity of the star & calculate habitability zones of the star:
 
-Calculates the luminosity of the host star, and adds data relating to the habitabilty zones of the star. Future versions will analyse this vs data of the exoplanets to see whether liquid water could exist on them. I would like to add some data from EM specrtums observed from the planets / stars to test for the presence of certain elements which may increase the chance of life forming.
+Calculates the luminosity of the host star, and adds data relating to the habitability zones of the star. Future versions will analyse this vs data of the exoplanets to see whether liquid water could exist on them. I would like to add some data from EM spectrums observed from the planets / stars to test for the presence of certain elements which may increase the chance of life forming.
 
 ### Histogram of number of exoplanets around a star:
 
 <img width="683" alt="image" src="https://user-images.githubusercontent.com/49762827/172060748-e5589720-6476-42f3-a6a5-481b71346b35.png">
 
-The histogram shows some interesting results, the vast majority of discoveries are that 1 exoplanet orbits a star, with the maximum being 8 exoplanets. At the moment I havent examined the data any further with python, so it will be interesting to see how many of these are in a habitable region.
+The histogram shows some interesting results, the vast majority of discoveries are that 1 exoplanet orbits a star, with the maximum being 8 exoplanets. At the moment I haven’t examined the data any further with python, so it will be interesting to see how many of these are in a habitable region.
 
-I expected this portion of coding to take no more than 15 minuets, however I was working on these small changes for about 2 frustrating hours! I had used a pivot table to count the exoplanets around a host star, and then put this into a histogram - however, this produced unexpected results. I spent a lot time manually verifying data (which was all correct), so the problem didn't arise from there. After going backwards and forwards with the dataset and debugging, I eventually re-wrote the method to use the groupby function to count the exoplanets. Sticking that into the histogram worked as intended. I am not exactly sure why using a pivot table produced this behaviour. However, on reflection the top value of the column with the counts was named by the pivot table 0 (zero as an integer). I wonder whether the histogram function interpereted this as a value instead of a column header.
+I expected this portion of coding to take no more than 15 minuets, however I was working on these small changes for about 2 frustrating hours! I had used a pivot table to count the exoplanets around a host star, and then put this into a histogram - however, this produced unexpected results. I spent a lot time manually verifying data (which was all correct), so the problem didn't arise from there. After going backwards and forwards with the dataset and debugging, I eventually re-wrote the method to use the groupby function to count the exoplanets. Sticking that into the histogram worked as intended. I am not exactly sure why using a pivot table produced this behaviour. However, on reflection the top value of the column with the counts was named by the pivot table 0 (zero as an integer). I wonder whether the histogram function interpreted this as a value instead of a column header.
 
 ### Comparing basic graphs between the mass data, and those exoplanets in the habitable zone:
 
@@ -100,5 +135,5 @@ Data plotted as a histogram:
 What is really interesting about this data is that just because a planet is in the habitable zone, it is not always habitable. For instance, the research conducted so far shows that a planet must:
 
 * Be in the habitable zone,
-* Have a gravity consistant with life (as we know it), and
+* Have a gravity consistent with life (as we know it), and
 * Not be a gaseous planet
