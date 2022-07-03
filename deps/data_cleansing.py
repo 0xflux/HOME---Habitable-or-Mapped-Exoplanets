@@ -35,10 +35,10 @@ def merge_data_rows(exoplanets):
 
 	index_of_t_df = -1 # start counter from -1 so we dont need a flag system - the actual used value will never be -1 as its incremented
 
+    # Create a temp dataframe with the columns of exoplanet that we will
+    # build the final dataset to in the below code.
 	t_df = pd.DataFrame(columns = exoplanets.columns)
-
-	#exoplanets.to_excel("beforeOps.xlsx")
-
+    
 	# create a list of planet names to establish if we are on a new planet, or the same on
 	list_of_planets_processed = []
 
@@ -47,7 +47,8 @@ def merge_data_rows(exoplanets):
 
 	# start the iteration
 	for index, row in exoplanets.iterrows():
-
+        
+        # get the name of the current planet we are iterating over from the dataframe
 		name_of_current_planet = exoplanets.loc[index,'name_of_planet']
 
 		# ensure we don't go out of bounds
