@@ -86,9 +86,6 @@ def merge_data_rows(exoplanets):
 				index_of_t_df += 1 # do this first, as it starts from -1
 				t_df.loc[index_of_t_df] = exoplanets.loc[index]
 
-
-	#t_df.to_excel("tdf.xlsx") # debug only
-
 	# Manually tested and no rows missing! Brilliant!
 
 	return t_df
