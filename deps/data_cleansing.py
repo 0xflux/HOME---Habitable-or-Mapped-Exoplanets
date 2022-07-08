@@ -47,12 +47,15 @@ def convert_xl_to_sql(df, table_name="exoplanets"):
 		# add to the new list
 		updated_col_names.append(val)
 
+	# strip list delimiters for sql 
+	sql_cols = ', '.join(updated_col_names)
+
 
 	# connect
 	sql_con, cursor = connect_to_db()
 
 	# create table for exo planets with flexibility
-	cursor.execute("CREATE TABLE {}({})".format(table_name, updated_col_names)) # use the column names + type from above loop
+	cursor.execute("CREATE TABLE {}({})".format(table_name, sql_cols)) # use the column names + type from above loop
 
 	sql_con.commit()
 	sql_con.close()
