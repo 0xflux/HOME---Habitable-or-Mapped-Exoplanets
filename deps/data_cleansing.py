@@ -8,6 +8,8 @@ import sys
 import sqlite3
 
 from . import phys_and_math as pam
+from . import consts as consts
+
 
 # A list of methods to clean up the data. I did consider doing this with classes and OOP, but it isnt neccessary.
 
@@ -20,7 +22,7 @@ def connect_to_db(db_name="exoplanet_data.db"):
 	return sqlite3.connect(db_name), sqlite3.connect(db_name).cursor()
 
 
-def convert_xl_to_sql(df, table_name="exoplanets"):
+def convert_xl_to_sql(table_name="exoplanets"):
 	'''
 	A function to convert the excel input data to sqllite in an attempt to speed up the program, would also provide
 	flexibility if the dataset grew much larger. Hoepfully this has some positive speed implications.
@@ -28,13 +30,30 @@ def convert_xl_to_sql(df, table_name="exoplanets"):
 
 	print("INFO - creating SQL table from dataframe")
 
+	# connect
+	sql_con, cursor = connect_to_db()
+
+	# First check if the table exists, if it does, exit the function
+	cursor.execute("""
+		SELECT count(*) FROM sqlite_master WHERE type='table' AND name='exoplanets'
+		""")
+
+	if cursor.fetchone()[0] == 1:
+		sql_con.close()
+		print("RETURNING")
+		return True
+
+
+	df = pd.read_excel(consts.get_input_data_path())
 	# get column names from df
 	col_names = df.columns.values.tolist()
 	updated_col_names = []
+	raw_col_modified  = [] # create a list for the insert statement so we can say row.ColName 
 
 	# iterate through the list, find the datatype and append this to the list string in sql 
 	# happy format to create a table, this allows less manual input work to be done.
 	for val in col_names:
+
 		if df[val].dtype == ' int64':
 			val += ' integer'
 		elif df[val].dtype == 'object':
@@ -50,15 +69,18 @@ def convert_xl_to_sql(df, table_name="exoplanets"):
 	# strip list delimiters for sql 
 	sql_cols = ', '.join(updated_col_names)
 
-
-	# connect
-	sql_con, cursor = connect_to_db()
-
 	# create table for exo planets with flexibility
-	cursor.execute("CREATE TABLE {}({})".format(table_name, sql_cols)) # use the column names + type from above loop
-
+	try:
+		cursor.execute("CREATE TABLE {}({})".format(table_name, sql_cols)) # use the column names + type from above loop
+	except: 
+		print("Table exists, or other error")
+	
 	sql_con.commit()
+
+	df.to_sql('exoplanets', sql_con, if_exists='replace', index = False)
+
 	sql_con.close()
+
 
 
 
