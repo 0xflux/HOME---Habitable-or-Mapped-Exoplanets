@@ -3,12 +3,10 @@ import pandas as pd
 import sys
 import matplotlib.pyplot as plt
 from pathlib import Path
-from urllib.request import pathname2url
 
 from deps import data_cleansing as dc
 from deps import plot_logic as pl
 from deps import phys_and_math as pam
-from deps import consts as consts
 
 def main():
 
@@ -37,9 +35,9 @@ def main():
 
 	'''
 
-	LENGTH_OF_LIST = consts.get_len_list() # raw data
-	CLEAN_DATA_FILE_PATH = consts.get_clean_data_file_path()
-	INPUT_DATA_PATH = consts.get_input_data_path()
+	LENGTH_OF_LIST = 32542 # raw data
+	CLEAN_DATA_FILE_PATH = './cleaned_data.xlsx'
+	INPUT_DATA_PATH = './deps/PS_2022.06.01_08.42.24.xlsx'
 
 	# set some rules for debug output - I dont want rows, but columns in full:
 	pd.set_option('display.max_columns', None)
@@ -64,9 +62,6 @@ def main():
 		# Clean & format the data
 		exoplanets = dc.data_cleansing_methods(master_data, LENGTH_OF_LIST, CLEAN_DATA_FILE_PATH)
 		
-
-	dc.convert_xl_to_sql()
-
 
 	# produce a scatter plot for planet mass against the temperature (K) of its host star, is there a correlation? 
 	# TODO - this should also take into account the distance from the host star - probably use 'orbital_period_widest_radius_in_AU' for this.
