@@ -63,6 +63,11 @@ def main():
 		exoplanets = dc.data_cleansing_methods(master_data, LENGTH_OF_LIST, CLEAN_DATA_FILE_PATH)
 		
 
+
+	# Convert xl to sqlite db
+	dc.convert_xl_to_sql(pd.read_excel(INPUT_DATA_PATH))
+
+
 	# produce a scatter plot for planet mass against the temperature (K) of its host star, is there a correlation? 
 	# TODO - this should also take into account the distance from the host star - probably use 'orbital_period_widest_radius_in_AU' for this.
 	pl.scatter_plot_for_planet_mass_vs_solar_temp(exoplanets, 
