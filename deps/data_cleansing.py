@@ -5,8 +5,10 @@ import requests
 import re
 from bs4 import BeautifulSoup
 import sys
+import sqlite3
 
 from . import phys_and_math as pam
+from . import consts as consts
 
 
 # A list of methods to clean up the data. I did consider doing this with classes and OOP, but it isnt neccessary.
