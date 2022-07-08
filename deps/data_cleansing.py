@@ -13,6 +13,7 @@ from . import consts as consts
 
 # A list of methods to clean up the data. I did consider doing this with classes and OOP, but it isnt neccessary.
 
+#
 
 def connect_to_db(db_name="exoplanet_data.db"):
 	'''
