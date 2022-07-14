@@ -4,6 +4,8 @@ import sys
 import matplotlib.pyplot as plt
 from pathlib import Path
 
+# below 4 scripts written by me which are used by the main function below 
+# and can be found in the /deps/ folder
 from deps import data_cleansing as dc
 from deps import plot_logic as pl
 from deps import phys_and_math as pam
@@ -95,46 +97,6 @@ def main():
 	pl.graph_density(habitable, './output/density_hab_planets.png', './output/density_hab_planets-histogram.png')
 
 	pl.print_optimal_planets_for_life(exoplanets)
-
-	# lets have a look at the solar data
-	'''
-	solar_data_manipulation(exoplanets)
-	habitability_data_manipulation(exoplanets)
-	'''
-
-
-
-# things to do and ideas can be written under here so i dont forget.
-
-def habitability_data_manipulation(df):
-	'''
-	
-	A method to manipulate data relating to habitability zones
-
-	TODO (Idea - Graph the data, mean, median, mode etc.)
-	
-	Calculate the mean value of the luminosities of stars - how close is it to the luminosity of the sun, is there a trend that for exoplanets to 
-	exist / be detected, the star has to be a certain luminosity?
-
-	Caluclate the variences of orbit if possible (scrape data?) to see how much of the orbit is in the hab zone, how much out, if this could mean 
-	liquid would freeze / melt / sublime / deposition etc. Not sure if this can be calculated based on the data available. Would likely need 
-	measurements from the planets at all phases of it's orbit.
-
-	'''
-
-	pass
-
-
-def solar_data_manipulation(df):
-	'''
-	
-	A method to manipulate data relating to solar readings
-
-	TODO
-
-	'''
-
-	pass
 
 
 
